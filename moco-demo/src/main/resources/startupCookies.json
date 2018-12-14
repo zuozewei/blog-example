@@ -1,0 +1,15 @@
+[
+  {
+    "description":"这是一个带cookies的post请求",
+    "request":{
+      "uri":"/7d",
+      "method":"post",
+      "cookies":{
+        "login":"7dgroup"
+      }
+    },
+    "response":{
+      "text":"success！"
+      }
+    }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "description":"这是一个post请求",
+    "request":{
+      "uri":"/7d",
+      "method":"post"
+    },
+    "response":{
+      "text":"success！"
+    }
+  }
+]

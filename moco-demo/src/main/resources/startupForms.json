@@ -1,0 +1,15 @@
+[
+  {
+    "description":"这是一个带forms参数的post请求",
+    "request":{
+      "uri":"/7d",
+      "method":"post",
+      "forms":{
+        "name":"zuozewei"
+      }
+    },
+    "response":{
+      "text":"success！"
+      }
+    }
+]

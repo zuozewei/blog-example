@@ -1,0 +1,12 @@
+[
+  {
+    "description":"这是指定响应status的get请求",
+    "request":{
+      "uri":"/7d",
+      "method":"get"
+    },
+    "response":{
+      "status":400
+    }
+  }
+]

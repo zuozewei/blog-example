@@ -1,0 +1,15 @@
+[
+  {
+    "description":"这是一个指定Json响应的post请求",
+    "request":{
+      "uri":"/7d",
+      "method":"post"
+    },
+    "response":{
+      "json":{
+        "name":"success",
+        "code":"1"
+      }
+    }
+  }
+]

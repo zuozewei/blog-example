@@ -1,0 +1,14 @@
+[
+  {
+    "description":"这是一个响应Cookies的get请求",
+    "request":{
+      "uri":"/7d",
+      "method":"get"
+    },
+    "response":{
+      "cookies":{
+        "login":"7dgroup"
+      }
+    }
+  }
+]

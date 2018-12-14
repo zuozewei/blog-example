@@ -1,0 +1,19 @@
+[
+  {
+    "description":"这是一个get请求",
+    "request":{
+      "uri":"/7d",
+      "method":"get",
+      "cookies":{
+          "login":"7dgroup"
+        },
+      "queries":{
+        "name":"zuozewei",
+        "sex":"man"
+      }
+    },
+    "response":{
+      "text":"success！"
+    }
+  }
+]

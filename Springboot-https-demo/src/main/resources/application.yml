@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: a
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    #手动创建db_person数据库
+    url: jdbc:mysql://39.105.21.22:3306/db_person?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: zuozewei
+    password: zuozewei
+jpa:
+  hibernate:
+    ddl-auto: update
+  show-sql: true
+
+server:
+  port: 443
+  servlet:
+    context-path: /springboot
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-type: jks
+    key-alias: tomcat
+    key-store-password: zuozewei
+    key-store-provider: SUN
+    key-password: zuozewei
+    enabled: true
+
+
+

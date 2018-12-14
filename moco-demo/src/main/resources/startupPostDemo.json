@@ -1,0 +1,26 @@
+[
+  {
+    "description":"这是一个带headers和cookies以及Json参数的post请求",
+    "request":{
+      "uri":"/7d",
+      "method":"post",
+      "headers":{
+        "content-type":"application/json"
+      },
+      "cookies":{
+        "login":"7dgroup"
+      },
+      "json":{
+        "name":"zuozewei",
+        "sex":"man"
+      }
+    },
+    "response":{
+      "status":200,
+      "json":{
+        "name":"success",
+        "code":"1"
+      }
+    }
+  }
+]

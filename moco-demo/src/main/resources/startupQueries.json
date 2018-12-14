@@ -1,0 +1,14 @@
+[
+  {
+    "description":"这是一个请求queries",
+    "request":{
+      "uri":"/7d",
+      "queries":{
+        "name":"zuozewei"
+      }
+    },
+    "response":{
+      "text":"success！"
+    }
+  }
+]

@@ -1,0 +1,5 @@
+下载jar包后，在当前目录运行以下命令：
+java -jar moco-runner-0.11.0-standalone.jar http -p 12306 -c foo.json
+
+注意：-p 是指定12306端口作为服务使用。
+然后在浏览器中输入： http://localhost:12306 即可看到响应。

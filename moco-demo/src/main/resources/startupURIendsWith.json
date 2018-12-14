@@ -1,0 +1,14 @@
+[
+  {
+    "description":"这是一个请求endsWith URI",
+    "request":{
+      "uri":
+          {
+            "endsWith":"/7d"
+          }
+    },
+    "response":{
+      "text":"success！"
+    }
+  }
+]

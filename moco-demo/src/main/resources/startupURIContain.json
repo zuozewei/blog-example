@@ -1,0 +1,14 @@
+[
+  {
+    "description":"这是一个请求Contain URI",
+    "request":{
+      "uri":
+          {
+            "contain":"/7d"
+          }
+    },
+    "response":{
+      "text":"success！"
+    }
+  }
+]

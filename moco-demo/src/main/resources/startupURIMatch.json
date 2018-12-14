@@ -1,0 +1,14 @@
+[
+  {
+    "description":"这是一个请求Match URI",
+    "request":{
+      "uri":
+          {
+            "match":"/\\w*/7d"
+          }
+    },
+    "response":{
+      "text":"success！"
+    }
+  }
+]

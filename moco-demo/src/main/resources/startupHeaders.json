@@ -1,0 +1,15 @@
+[
+  {
+    "description":"这是一个带headers的post请求",
+    "request":{
+      "uri":"/7d",
+      "method":"post",
+      "headers":{
+        "content-type":"application/json"
+      }
+    },
+    "response":{
+      "text":"success！"
+      }
+    }
+]

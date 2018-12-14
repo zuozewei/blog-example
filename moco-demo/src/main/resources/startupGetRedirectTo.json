@@ -1,0 +1,10 @@
+[
+  {
+    "description":"这是一个重定向的get请求",
+    "request":{
+      "uri":"/7d",
+      "method":"get"
+    },
+    "redirectTo":"http://blog.csdn.net/zuozewei"
+  }
+]
