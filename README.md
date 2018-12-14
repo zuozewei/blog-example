@@ -1,4 +1,4 @@
-# Java-API-Test-Course
+# Java-API-Test-Examples
 Blog Demo &amp; Source code （文章示例及源码）
 
 **接口测试系列：**
