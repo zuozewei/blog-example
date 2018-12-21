@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="测试demo" verbose="1" preserve-order="true">
+    <parameter name="report.config" value="src/main/resources/report/extent-config.xml"/>
+    <parameter name="system.info" value="com.zuozewei.config.MySystemInfo"/>
+
+    <test name="测试demo" preserve-order="true">
+        <classes>
+            <class name="com.zuozewei.testng.TestDemo1"/>
+        </classes>
+    </test>
+
+    <listeners>
+        <listener class-name="com.zuozewei.Listener.MyExtentTestNgFormatter"/>
+    </listeners>
+</suite>
