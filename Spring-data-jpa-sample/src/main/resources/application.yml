@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: a
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    # 手动创建db_person数据库
+    url: jdbc:mysql://39.105.21.227:3306/db_person?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: zuozewei
+    password: zuozewei
+
+jpa:
+  hibernate:
+    ddl-auto: update
+  # 显示sql 但不会显示具体的操作值 可以替换成log4jdbc
+  show-sql: true
+
+jp
+
+server:
+  port: 8888
+  servlet:
+    context-path: /springboot
+
+
+
