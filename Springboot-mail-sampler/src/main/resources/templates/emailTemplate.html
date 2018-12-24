@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Title</title>
+    </head>
+    <body>
+        您好,请点击下面的链接查看历史报告<br/>
+        <a href="#" th:href="@{ https://blog.csdn.net/{id}(id=${id}) }">访问我的博客</a>
+    </body>
+</html>
