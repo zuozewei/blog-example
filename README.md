@@ -14,3 +14,4 @@ Blog Demo &amp; Source code （文章示例及源码）
 - [走进Java接口测试之服务端测试报告Klov ExtentReports](https://mp.weixin.qq.com/s?__biz=MzIwNDY3MDg1OA==&mid=2247484881&idx=1&sn=672ebd28fa87c227e3aae24128c4ef04&chksm=973dd734a04a5e22fb59b34ff358c8779f9f22ad44c8834babe58f92f9925dfe7239097de1a7#rd)
 - [走进Java接口测试之持久层框架Spring-data-jpa](https://mp.weixin.qq.com/s?__biz=MzIwNDY3MDg1OA==&mid=2247484891&idx=1&sn=7538dcdcc680e64d02b5242f339ed431&chksm=973dd73ea04a5e2879e22f9265f6326690cc151baa27ee6a91eb1d8e98cf7e97be56ff939761&token=317313199&lang=zh_CN#rd)
 - [走进Java接口测试之使用JavaMailSender发送邮件](https://mp.weixin.qq.com/s/J0KpsoeC_o53GymI6qtufw)
+- [走进Java接口测试之日志框架Logback](https://mp.weixin.qq.com/s/aFAvldlTG5rNlyVaZrWcbg)
