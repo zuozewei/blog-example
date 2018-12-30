@@ -15,3 +15,4 @@ Blog Demo &amp; Source code （文章示例及源码）
 - [走进Java接口测试之持久层框架Spring-data-jpa](https://mp.weixin.qq.com/s?__biz=MzIwNDY3MDg1OA==&mid=2247484891&idx=1&sn=7538dcdcc680e64d02b5242f339ed431&chksm=973dd73ea04a5e2879e22f9265f6326690cc151baa27ee6a91eb1d8e98cf7e97be56ff939761&token=317313199&lang=zh_CN#rd)
 - [走进Java接口测试之使用JavaMailSender发送邮件](https://mp.weixin.qq.com/s/J0KpsoeC_o53GymI6qtufw)
 - [走进Java接口测试之日志框架Logback](https://mp.weixin.qq.com/s/aFAvldlTG5rNlyVaZrWcbg)
+- [走进Java接口测试之AOP统一日志记录](https://mp.weixin.qq.com/s?__biz=MzIwNDY3MDg1OA==&mid=2247484972&idx=2&sn=2fe29448d9e107ba69b6adc1daff480c&chksm=973dd4c9a04a5ddff613b521698afe6e0b5aaa4a1a1c81db2121f3aab7916b8f405087b43875&token=463319199&lang=zh_CN#rd)
