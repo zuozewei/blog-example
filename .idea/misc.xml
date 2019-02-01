@@ -6,7 +6,7 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/Springboot-https-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-assertj-demo/pom.xml" />
       </list>
     </option>
   </component>
