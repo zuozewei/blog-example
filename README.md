@@ -16,3 +16,4 @@ Blog Demo &amp; Source code （文章示例及源码）
 - [走进Java接口测试之使用JavaMailSender发送邮件](https://mp.weixin.qq.com/s/J0KpsoeC_o53GymI6qtufw)
 - [走进Java接口测试之日志框架Logback](https://mp.weixin.qq.com/s/aFAvldlTG5rNlyVaZrWcbg)
 - [走进Java接口测试之AOP统一日志记录](https://mp.weixin.qq.com/s?__biz=MzIwNDY3MDg1OA==&mid=2247484972&idx=2&sn=2fe29448d9e107ba69b6adc1daff480c&chksm=973dd4c9a04a5ddff613b521698afe6e0b5aaa4a1a1c81db2121f3aab7916b8f405087b43875&token=463319199&lang=zh_CN#rd)
+- [走进Java接口测试之流式断言库AssertJ](https://mp.weixin.qq.com/s?__biz=MzIwNDY3MDg1OA==&mid=2247485019&idx=1&sn=ce4125cb1d80f6762bdec53e28f8a642&chksm=973dd4bea04a5da80ccc2522f9f9dd349c9f8104d03fc08e4b9c96d34a362786dc04903199d1&token=1532831208&lang=zh_CN#rd)
