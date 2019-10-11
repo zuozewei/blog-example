@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @create 2018-12-30 12:54
  **/
 @Configuration
-public class MyWebMvcConfigurer extends WebMvcConfigurerAdapter {
+public class MyWebMvcConfigurer implements  WebMvcConfigurer  {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

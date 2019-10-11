@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/java-api-blog.iml" filepath="$PROJECT_DIR$/.idea/java-api-blog.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-assertj-demo/springboot-assertj-demo.iml" filepath="$PROJECT_DIR$/springboot-assertj-demo/springboot-assertj-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-assertj-demo/springboot-assertj-demo.iml" filepath="$PROJECT_DIR$/springboot-assertj-demo/springboot-assertj-demo.iml" />
     </modules>
   </component>
 </project>
