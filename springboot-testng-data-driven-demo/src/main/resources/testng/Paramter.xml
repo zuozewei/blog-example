@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="parameter">
+    <test name="param">
+        <parameter name="name" value="zhangsan"/>
+        <parameter name="age" value="10"/>
+
+        <classes>
+            <class name="com.zuozewei.springboottestngdatadrivendemo.paramter.ParamterTest"/>
+        </classes>
+    </test>
+</suite>
+
+
