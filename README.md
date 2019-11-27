@@ -9,18 +9,18 @@
 
 **Java接口测试系列：**
 
-数据格式：
+**数据格式：**
 - [走进Java接口测试之理解JSON和XML基础](https://blog.csdn.net/zuozewei/article/details/86702549)
 - [走进Java接口测试之fastjson指南](https://blog.csdn.net/zuozewei/article/details/86737495)
 
-Mock：
+**Mock：**
 - [走进Java接口测试之Mock（概念篇）](https://blog.csdn.net/zuozewei/article/details/84892008)
-- [走进Java接口测试之简单快速的Mock Server Moco](https://blog.csdn.net/zuozewei/article/details/84901009)
+-  [走进Java接口测试之简单快速的Mock Server Moco](https://blog.csdn.net/zuozewei/article/details/84901009)
 
-构建工具：
+**构建工具：**
 - [走进Java接口测试之构建工具Maven入门](https://zuozewei.blog.csdn.net/article/details/103047687)
 
-脚手架：
+ **脚手架：**
 - [走进Java接口测试之流行框架SpringBoot](https://blog.csdn.net/zuozewei/article/details/84934208)
 - [走进Java接口测试之持久层框架Spring-data-jpa](https://blog.csdn.net/zuozewei/article/details/85220869)
 - [走进Java接口测试之测试框架TestNG](https://blog.csdn.net/zuozewei/article/details/84996072)
@@ -28,22 +28,25 @@ Mock：
 - [走进Java接口测试之流式断言库AssertJ](https://blog.csdn.net/zuozewei/article/details/86567263)
 - [走进Java接口测试之多环境配置](https://zuozewei.blog.csdn.net/article/details/102480413)
 
-开发插件：
+**测试数据：**
+- [走进Java接口测试之测试框架TestNG数据驱动（入门篇）](https://zuozewei.blog.csdn.net/article/details/103213109)
+
+**开发插件：**
 - [走进Java接口测试之效率插件lombok](https://blog.csdn.net/zuozewei/article/details/85109439)
 
-接口管理：
+**接口管理：**
 - [走进Java接口测试之接口管理工具Swagger2](https://blog.csdn.net/zuozewei/article/details/84865116)
-
-日志处理：
+ 
+ 日志处理：
 - [走进Java接口测试之日志管理之AOP统一日志](https://blog.csdn.net/zuozewei/article/details/85375106)
 
-测试报告：
+**测试报告：**
 - [走进Java接口测试之测试报告ExtentReport](https://blog.csdn.net/zuozewei/article/details/85011217)
 - [走进Java接口测试之服务端测试报告Klov ExtentReports](https://blog.csdn.net/zuozewei/article/details/85159331)
 
-自动通知:
+**自动通知：**
 - [走进Java接口测试之使用JavaMailSender发送邮件](https://blog.csdn.net/zuozewei/article/details/85228133)
 
-实践:
+**实践：**
 - [秒懂HTTPS接口（实现篇）](https://blog.csdn.net/zuozewei/article/details/84727095)
 - [秒懂HTTPS接口（接口测试篇）](https://blog.csdn.net/zuozewei/article/details/84727450)
