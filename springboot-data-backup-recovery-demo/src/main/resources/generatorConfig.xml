@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="MySQLTables" targetRuntime="MyBatis3">
+        <!--支持流式 fluent 方法-->
+        <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin" />
+        <!-- 自动生成toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <!-- 自动生成hashcode方法 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <!-- 分页插件 -->
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+
+        <!--数据库连接信息-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/zuozewei?useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false"
+                        userId="vbi"
+                        password="123456">
+        </jdbcConnection>
+
+        <!--模型生成器、Mapper生成器-->
+        <javaModelGenerator targetPackage="com.zuozewei.springbootdatabackuprecoverydemo.db.auto.model"
+                            targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="com.zuozewei.springbootdatabackuprecoverydemo.db.auto.mapper"
+                         targetProject="./src/main/resources/mapper">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <javaClientGenerator type="MIXEDMAPPER"
+                             targetPackage="com.zuozewei.springbootdatabackuprecoverydemo.db.auto.mapper"
+                             targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--表映射-->
+        <table tableName="t_coffee" domainObjectName="Coffee" >
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+            <columnOverride column="price" javaType="org.joda.money.Money" jdbcType="BIGINT"
+                            typeHandler="com.zuozewei.springbootdatabackuprecoverydemo.handler.MoneyTypeHandler"/>
+        </table>
+    </context>
+</generatorConfiguration>

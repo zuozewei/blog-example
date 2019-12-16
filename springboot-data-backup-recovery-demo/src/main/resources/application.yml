@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zuozewei?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    username: vbi
+    password: 123456
+mybatis:
+  type-aliases-package: com.zuozewei.springbootdatabackuprecoverydemo.db # 自动扫描实体类所在的包
+  type-handlers-package: com.zuozewei.springbootdatabackuprecoverydemo.handler # 指定 TypeHandler 所在的包
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰功能
+  mapper-locations: classpath*:/mapper/**/*.xml # 扫描类路径下所有以xml文件结尾的文件
+
+
+
+
+

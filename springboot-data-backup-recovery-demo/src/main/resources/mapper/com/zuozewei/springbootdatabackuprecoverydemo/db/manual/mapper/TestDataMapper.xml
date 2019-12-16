@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zuozewei.springbootdatabackuprecoverydemo.db.manual.mapper.TestDataMapper" >
+
+	<!--修改数据库的表名字-->
+	<update id="alterTableName">
+        alter table ${originalTableName} rename to ${newTableName}
+    </update>
+
+	<!--truncate指定数据库表的数据-->
+	<update id="truncateTable">
+        truncate table ${tableName}
+    </update>
+
+	<!--drop指定数据库表的数据-->
+	<update id="dropTable">
+        drop table ${tableName}
+    </update>
+
+	<!--根据传入的表明，创建新的表并且将原表的数据插入到新的表中-->
+	<update id="createNewTableAndInsertData">
+        create table ${newTableName} as select * from ${originalTableName}
+    </update>
+
+	<!--统计某张表中的总数据条数-->
+	<select id="getRecordCount" resultType="int">
+        select count(1) from ${tableName}
+    </select>
+
+	<!--获得当前数据库的名字-->
+	<select id="getCurDataBaseName" resultType="string">
+        select database();
+    </select>
+
+	<!--从指定数据库中，查询是否存在某张表-->
+	<select id="isTargetTableExistInDB" resultType="string">
+        SELECT table_name FROM information_schema.tables WHERE table_schema = #{dataBaseName} and TABLE_NAME = #{tableName}
+    </select>
+
+</mapper>
