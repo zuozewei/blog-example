@@ -94,8 +94,8 @@ logging:
   file:
     path: ./logs # 日志文件路径
 mybatis:
-  type-aliases-package: com.zuozewei.db # 自动扫描实体类所在的包
-  type-handlers-package: com.zuozewei.handler # 指定 TypeHandler 所在的包
+  type-aliases-package: com.zuozewei.springbootdatadrivendemo.db # 自动扫描实体类所在的包
+  type-handlers-package: com.zuozewei.springbootdatadrivendemo.handler # 指定 TypeHandler 所在的包
   configuration:
     map-underscore-to-camel-case: true # 开启驼峰功能
     call-setters-on-nulls: true     # 调用setter null，返回空也必须设置到bean中  （直接执行sql专用）
