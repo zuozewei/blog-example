@@ -30,6 +30,7 @@
 **测试数据：**
 -  [走进Java接口测试之测试框架TestNG数据驱动（入门篇）](https://zuozewei.blog.csdn.net/article/details/103213109)
 - [走进Java接口测试之解决超大文本数据驱动报OOM问题](https://zuozewei.blog.csdn.net/article/details/103280672)
+- [走进Java接口测试之简单解决写接口脏数据问题](https://blog.csdn.net/zuozewei/article/details/103562531)
 - [走进Java接口测试之从0到1搭建数据驱动框架（需求篇）](https://zuozewei.blog.csdn.net/article/details/103332912)
 - [走进Java接口测试之从0到1搭建数据驱动框架（设计篇）](https://zuozewei.blog.csdn.net/article/details/103281308)
 - [走进Java接口测试之从0到1搭建数据驱动框架（用例管理）](https://zuozewei.blog.csdn.net/article/details/103402081)
