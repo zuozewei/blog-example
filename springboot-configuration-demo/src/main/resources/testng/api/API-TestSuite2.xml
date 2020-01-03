@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="测试demo2" verbose="1" preserve-order="true" >
+
+<test name="测试demo2" preserve-order="true">
+
+    <classes>
+        <class name="com.zuozewei.springboot.test.TestCase2"/>
+    </classes>
+</test>
+
+<!--<listeners>-->
+<!--<listener class-name="com.zuozewei.springbootdatadrivendemo.demo.listener.ExtentTestNGIReporterListener"/>-->
+<!--</listeners>-->
+</suite>

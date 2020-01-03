@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="测试集合" verbose="1" preserve-order="true">
+
+    <suite-files>
+        <suite-file path="api/API-TestSuite1.xml"/>
+    </suite-files>
+
+    <!--<listeners>-->
+    <!--<listener class-name="com.zuozewei.springbootdatadrivendemo.demo.listener.ExtentTestNGIReporterListener"/>-->
+    <!--</listeners>-->
+</suite>
