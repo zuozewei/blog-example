@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="jdbc 测试" verbose="1" preserve-order="true" >
+
+<test name="测试demo" preserve-order="true">
+    <parameter name="sql"
+               value="SELECT * FROM autotest.api_testdata_demo
+                    WHERE Protocol = 'jdbc'
+                    AND Category = 'db'
+                    AND Method = 'demo'
+                    AND isRun = 1;"/>
+
+    <classes>
+        <class name="com.zuozewei.springbootdatadrivendemo.demo.TestMapperService"/>
+    </classes>
+</test>
+
+<!--<listeners>-->
+<!--<listener class-name="com.zuozewei.springbootdatadrivendemo.demo.listener.ExtentTestNGIReporterListener"/>-->
+<!--</listeners>-->
+</suite>
