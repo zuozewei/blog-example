@@ -1,0 +1,29 @@
+settings:
+  env:
+    BASE_DIR: /home/taurus/taurus_container_scripts  # 脚本目录
+  artifacts-dir: /home/taurus/taurus_container_artifacts/my_scenario/%Y-%m-%d_%H-%M  # path where to save artifacts, default is %Y-%m-%d_%H-%M-%S.%f
+  
+scenarios:
+  my_scenario:
+    requests:
+      - label: Home
+        url: /       #路径
+        method: GET  #请求方式
+
+execution:
+- concurrency: 10  #并发线程数
+  ramp-up: 1m      # 启动时间
+  hold-for: 2m30s  # 持续时间
+  scenario:        # 测试场景
+    default-address: http://www.example.com/  # 请求地址
+    requests: 
+      - include-scenario: my_scenario  # 场景名称
+
+reporting:  
+- module: final-stats # 摘要报告
+- module: console     # 控制台
+
+modules:
+    jmeter:
+        download-link: 'https://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-{version}.zip' # 下载地址
+        version: 5.2.1  # 版本号

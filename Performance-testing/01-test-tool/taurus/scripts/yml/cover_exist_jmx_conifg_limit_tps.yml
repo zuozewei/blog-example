@@ -1,0 +1,25 @@
+settings:
+  env:
+    BASE_DIR: E:\Taurus   # 脚本目录
+  artifacts-dir: E:\Taurus\artifacts\simple1\%Y-%m-%d_%H-%M  # path where to save artifacts, default is %Y-%m-%d_%H-%M-%S.%f
+ 
+execution:
+- concurrency: 10  #并发线程数
+  throughput: 5    # 限制TPS
+  steps: 5
+  ramp-up: 1m      # 启动时间
+  hold-for: 2m30s  # 持续时间
+  scenario: simple1  # 场景名称
+
+scenarios:
+   simple1:
+        script: '${BASE_DIR}/build-web-test-plan.jmx'  # 脚本
+
+modules:
+    jmeter:
+        download-link: 'https://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-{version}.zip' # 下载地址
+        version: 5.2.1  # 版本号
+
+reporting:
+- module: final-stats   # 摘要报告
+- module: console       # 控制台

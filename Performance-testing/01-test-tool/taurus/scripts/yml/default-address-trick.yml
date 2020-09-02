@@ -1,0 +1,30 @@
+---
+scenarios:
+  my_scenario:
+    requests:
+      - label: Home
+        url: /
+        method: GET
+        think-time: 500ms
+
+execution:
+- concurrency: 5
+  ramp-up: 30s
+  hold-for: 1m
+  scenario:
+    default-address: http://www.example.com/
+    requests: 
+      - include-scenario: my_scenario
+
+reporting:
+- module: console
+
+modules:
+    jmeter:
+        download-link: 'https://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-{version}.zip'
+        version: 5.2.1
+
+settings:
+  env:
+    BASE_DIR: /home/taurus_container_scripts
+  artifacts-dir: /home/taurus_container_artifacts/default-address-trick/%Y-%m-%d_%H-%M

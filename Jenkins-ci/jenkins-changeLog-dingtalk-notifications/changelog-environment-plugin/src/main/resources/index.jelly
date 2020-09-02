@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+  This plugin allows you to add changelog information to the build environment for use in build scripts.
+</div>

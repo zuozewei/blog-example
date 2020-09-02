@@ -1,0 +1,1 @@
+[ ERROR ] 2018-08-07 15:43:29 [ main:583 ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9999.

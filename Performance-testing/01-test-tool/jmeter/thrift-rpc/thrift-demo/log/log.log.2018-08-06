@@ -1,0 +1,12 @@
+[ ERROR ] [2018-08-06 18:27:16] [ LOGID: ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ ERROR ] [2018-08-06 18:27:45] [ LOGID: ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ ERROR ] [2018-08-06 18:28:13] [ LOGID: ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ ERROR ] [2018-08-06 18:30:09] [ LOGID: ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ ERROR ] [2018-08-06 18:30:34] [ LOGID: ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ INFO ] [2018-08-06 18:30:52] [ LOGID: ] [server.ServerMain.main(ServerMain.java:32)] compute service server on port :9999
+[ INFO ] [2018-08-06 18:31:12] [ LOGID: ] [server.ThriftTestImpl.getComputeResult(ThriftTestImpl.java:22)] get compute result begin. [x:1] [y:2] [type:ADD]
+[ INFO ] [2018-08-06 18:31:12] [ LOGID: ] [server.ThriftTestImpl.getComputeResult(ThriftTestImpl.java:49)] get compute result end. [errno:0] cost:[1ms]
+[ INFO ] [2018-08-06 18:31:24] [ LOGID: ] [server.ThriftTestImpl.getComputeResult(ThriftTestImpl.java:22)] get compute result begin. [x:1] [y:2] [type:ADD]
+[ INFO ] [2018-08-06 18:31:24] [ LOGID: ] [server.ThriftTestImpl.getComputeResult(ThriftTestImpl.java:49)] get compute result end. [errno:0] cost:[0ms]
+[ INFO ] [2018-08-06 18:34:12] [ LOGID: ] [server.ThriftTestImpl.getComputeResult(ThriftTestImpl.java:22)] get compute result begin. [x:1] [y:2] [type:MUL]
+[ INFO ] [2018-08-06 18:34:12] [ LOGID: ] [server.ThriftTestImpl.getComputeResult(ThriftTestImpl.java:49)] get compute result end. [errno:0] cost:[0ms]

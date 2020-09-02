@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    //变量定义
+    environment {
+        _workspace = "${env.WORKSPACE}"
+        _projectName = "${env.JOB_NAME}"
+        _BUILD_NUMBER = "${env.BUILD_NUMBER}"
+        _ScannerMsBuildHome = "C:\\Users\\htsd\\Downloads\\sonar-scanner-msbuild-4.6.1.2049-net46"
+        _MSBuildHome = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\MSBuild\\15.0\\Bin\\amd64"
+
+    }
+
+    stages {
+        stage('Checkout Code'){//从git仓库中检出代码
+          steps {
+	    	git branch: "${BRANCH}",credentialsId: '40c624a3-b7c6-4b51-830b-2295edc3ffbd', url: "${REPO_URL}"
+          }
+	  	}
+
+        stage('Build & SonarQube analysis') {
+            steps{
+                withSonarQubeEnv('SonarQube7.4') {
+                // Due to SONARMSBRU-307 value of sonar.host.url and credentials should be passed on command line
+
+                echo "_ScannerMsBuildHome:${_ScannerMsBuildHome}"
+                echo "_MSBuildHome:${_MSBuildHome}"
+
+                bat "${_ScannerMsBuildHome}\\SonarScanner.MSBuild.exe begin /k:${_projectName} /n:${_projectName} /v:${_BUILD_NUMBER} /d:sonar.host.url=%SONAR_HOST_URL% /d:sonar.login=%SONAR_AUTH_TOKEN% /d:sonar.scm.provider=True"
+                bat "\"${_MSBuildHome}\\MSBuild.exe\" Project.sln /t:Rebuild"
+                bat "${_ScannerMsBuildHome}\\SonarScanner.MSBuild.exe end /d:sonar.login=%SONAR_AUTH_TOKEN%"
+
+                }   // SonarQube taskId自动附加到pipeline上下文
+            }
+        }
+
+        // 不需要占用节点
+        stage("Quality Gate") {
+            steps{
+                  timeout(time: 1, unit: 'HOURS') {       // 万一发生错误，pipeline 将在超时后被终止
+                  waitForQualityGate abortPipeline: true  // 告诉 Jenkins 等待 SonarQube 返回的分析结果。当 abortPipeline=true，表示质量不合格，将 pipeline 状态设置为 UNSTABLE。
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            //发送钉钉通知
+            echo 'Dingtalk Notification'
+            bat "python D:\\WorkSpace-new\\pipline\\VBI-notification.py"
+        }
+    }
+}
+

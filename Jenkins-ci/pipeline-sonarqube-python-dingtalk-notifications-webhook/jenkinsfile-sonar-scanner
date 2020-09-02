@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    environment {
+        _workspace = "${env.WORKSPACE}"
+        _projectName = "${env.JOB_NAME}"
+        _BUILD_NUMBER = "${env.BUILD_NUMBER}"
+        _scannerHome = "C:\\sonar-scanner-cli-3.3.0.1492-windows\\sonar-scanner-3.3.0.1492-windows\\bin"
+    }
+
+    stages {
+        stage('Checkout Code'){//从git仓库中检出代码
+          steps {
+	    	git branch: "${BRANCH}",credentialsId: '40c624a3-b7c6-4b51-830b-2295edc3ffbd', url: "${REPO_URL}"
+          }
+	  	}
+        stage('SonarQube analysis') {
+            steps{
+
+                withSonarQubeEnv('SonarQube7.4') {
+                // Due to SONARMSBRU-307 value of sonar.host.url and credentials should be passed on command line
+
+                echo "_scannerHome:${_scannerHome}"
+
+                bat "${_scannerHome}\\sonar-scanner.bat -Dsonar.projectName=${_projectName} -Dsonar.sources=. -Dsonar.projectKey=${_projectName} -Dsonar.projectVersion=${_BUILD_NUMBER} -Dsonar.login=%SONAR_AUTH_TOKEN% -Dsonar.scm.provider=True"
+
+                }   // SonarQube taskId 自动附加到 pipeline 上下文
+            }
+        }
+
+        // 不需要占用节点
+        stage("Quality Gate") {
+            steps{
+                  timeout(time: 1, unit: 'HOURS') {       // 万一发生错误，pipeline 将在超时后被终止
+                  waitForQualityGate abortPipeline: true  // 告诉 Jenkins 等待 SonarQube 返回的分析结果。当abortPipeline=true，表示质量不合格，将pipeline状态设置为UNSTABLE。
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            //发送钉钉通知
+            echo 'Dingtalk Notification'
+            bat "python D:\\WorkSpace-new\\pipline\\VBI-notification.py"
+        }
+    }
+}

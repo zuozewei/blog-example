@@ -1,0 +1,117 @@
+# ---------------------------------
+# 1.各变量赋值
+# 2.初始化目录，包括：程序目录，下载目录，资源备份目录（如果不存在）
+# 3.结束正在运行的服务进程（等待3秒）
+# 4.清空资源目录
+# 5.备份 Data/Files 目录
+# 6.备份 Data/projects 目录
+# 7.清空程序目录
+# 8.下载 server 程序文件
+# 9.解压文件
+# 10.清空&还原 Data/projects 目录
+# 11.启动 server 服务
+# ---------------------------------
+
+- hosts: "{{target}}"
+  remote_user: htsd
+  vars:
+    package:
+      root_url: "http://172.16.106.188:8081/repository/app-{{branch}}-info/server/"
+    deploy:
+      app_path: "C:\\app\\app-{{branch}}-info\\server"
+      package_path: C:\app\package
+      res_path: C:\app\res
+      PsExec_path: C:\app\tools\PSTools
+  tasks:
+ # --------------------初始化目录--------------------
+  - name: 创建程序目录
+    win_file:
+      path: "{{deploy.app_path}}"
+      state: directory
+      become: yes
+  - debug:
+      msg: "{{deploy.app_path}}"
+  - name: 创建下载目录
+    win_file:
+      path: "{{deploy.package_path}}"
+      state: directory
+      become: yes
+  - debug:
+      msg: "{{deploy.package_path}}"
+  - name: 创建资源备份目录
+    win_file:
+      path: "{{deploy.res_path}}"
+      state: directory
+      become: yes
+  - debug:
+      msg: "{{deploy.package_path}}"
+  # -------------------备份及结束进程------------------
+  - name: 结束 Server 进程
+    win_shell: Stop-Process -Name "app.Server" -Force
+    ignore_errors: true
+  - name: 等待3秒停止 Server 进程
+    win_wait_for_process:
+      process_name_pattern: app.Server
+      state: absent
+      timeout: 3
+  - name: 清空资源目录
+    win_shell: |
+      $TargetFolder = "{{deploy.res_path}}"
+      $Files = get-childitem $TargetFolder -force
+      Foreach ($File in $Files)
+      {
+      $FilePath=$File.FullName
+      Remove-Item -Path $FilePath -Recurse -Force
+      }
+  - name: 备份 Data/Files 目录
+    win_shell: Copy-Item "{{deploy.app_path}}\Data\Files" -Destination {{deploy.res_path}} -Recurse
+    ignore_errors: yes
+  - name: 备份 Data/projects 目录
+    win_shell: Copy-Item "{{deploy.app_path}}\Data\projects" -Destination {{deploy.res_path}} -Recurse
+    ignore_errors: yes
+  - name: 清空程序目录
+    win_shell: |
+      $TargetFolder = "{{deploy.app_path}}"
+      $Files = get-childitem $TargetFolder -force
+      Foreach ($File in $Files)
+      {
+      $FilePath=$File.FullName
+      Remove-Item -Path $FilePath -Recurse -Force
+      }
+# ----------------下载&更新程序------------------------
+  - name: 下载 server 程序文件
+    win_get_url:
+      url: "{{package.root_url}}{{package_name}}"
+      dest: "{{deploy.package_path}}"
+      force: no
+  - debug:
+      msg: "{{package_name}}"
+  - name: 递归解压文件后删除zip包
+    win_unzip:
+     src:  "{{deploy.package_path}}/{{package_name}}"
+     dest:  "{{deploy.app_path}}"
+     recurse: yes
+     delete_archive: yes
+  - name: 删除原 Data/Files 目录
+    win_shell: rmdir /s/q "{{deploy.app_path}}\Data\Files"
+    args:
+        executable: cmd.exe
+    ignore_errors: yes
+  - name: 删除原 Data/projects 目录
+    win_shell: rmdir /s/q "{{deploy.app_path}}\Data\projects"
+    args:
+        executable: cmd.exe
+    ignore_errors: yes
+  - name: 还原 Data/Files 目录
+    win_shell: Copy-Item "{{deploy.res_path}}\Files" -Destination "{{deploy.app_path}}\Data" -Recurse
+    ignore_errors: yes
+  - name: 还原 Data/projects 目录
+    win_shell: Copy-Item "{{deploy.res_path}}\projects" -Destination "{{deploy.app_path}}\Data" -Recurse
+    ignore_errors: yes
+# -------------------------启动-------------------------
+  - name: 启动 app-server
+    win_shell: "{{deploy.PsExec_path}}/psexec.exe  -accepteula -nobanner -i 1 -s -d {{deploy.app_path}}//app.Server.exe"
+    register: output
+    ignore_errors: yes
+#  - name: 打印日志
+#    debug: var=output

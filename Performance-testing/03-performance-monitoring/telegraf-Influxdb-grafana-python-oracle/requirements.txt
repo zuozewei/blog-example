@@ -1,0 +1,5 @@
+cx-Oracle==7.1.2
+cx-oracle-on-ctypes==0.1.dev0
+subprocess32==3.5.3
+args==0.1.0
+socket-executor==0.1

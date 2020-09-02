@@ -1,0 +1,5 @@
+[ ERROR ] 2018-08-06 18:27:16 [ main:521 ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ ERROR ] 2018-08-06 18:27:45 [ main:477 ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ ERROR ] 2018-08-06 18:28:13 [ main:460 ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ ERROR ] 2018-08-06 18:30:09 [ main:489 ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
+[ ERROR ] 2018-08-06 18:30:34 [ main:483 ] [server.ServerMain.main(ServerMain.java:36)] org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:9000.
