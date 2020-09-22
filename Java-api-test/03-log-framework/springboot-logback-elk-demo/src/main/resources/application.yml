@@ -1,0 +1,6 @@
+server:
+  port: 8888  # 端口号
+
+logging:
+  level:
+    root: DEBUG  #日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出
