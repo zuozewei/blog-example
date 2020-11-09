@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="TestCase" verbose="1" preserve-order="true">
+    <test name="TestCase" preserve-order="true">
+        <classes>
+            <class name="com.zuozewei.demo.example.TestCase1"/>
+            <class name="com.zuozewei.demo.example.TestCase2"/>
+        </classes>
+    </test>
+</suite>
+
+
