@@ -6,10 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="CommonInterface" />
-        <module name="moco demo" />
-        <module name="moco-demo" />
+        <module name="logbackdemo" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="logbackdemo" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

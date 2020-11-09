@@ -1,130 +1,252 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0b46572e-9d08-4577-bee9-14e8d5112c28" name="Default" comment="Merge remote-tracking branch 'origin/master'">
-      <change afterPath="$PROJECT_DIR$/.idea/blog-example.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/blog-example.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/blog-example.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/00-testdata/springboot-data-backup-recovery-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/00-testdata/springboot-data-backup-recovery-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/00-testdata/springboot-data-backup-recovery-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-data-driven-framework-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-data-driven-framework-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-data-driven-framework-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-testng-data-driven-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-testng-data-driven-demo/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-testng-data-driven-demo/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-testng-data-driven-demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-testng-data-driven-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-testng-data-driven-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-text-data-driven-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-text-data-driven-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-text-data-driven-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/02-environmental-management/springboot-mulienvironment-demo/springboot-muli-environment-demo.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-aop-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-aop-demo/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-aop-demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-aop-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-aop-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-demo/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-elk-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/03-log-framework/springboot-logback-elk-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/04-orm-framework/springboot-data-jpa-sample/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/04-orm-framework/springboot-data-jpa-sample/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/04-orm-framework/springboot-data-jpa-sample/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/04-orm-framework/springboot-data-jpa-sample/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/04-orm-framework/springboot-data-jpa-sample/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/extentklovreporter-demo/ExtentKlovReporter.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/extentklovreporter-demo/target/classes/TestSuite.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/extentklovreporter-demo/target/classes/report/extent-config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/extentreport-demo2/target/classes/testng.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/springboot-extentreport-demo1/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/springboot-extentreport-demo1/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/springboot-extentreport-demo1/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/springboot-extentreport-demo1/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/05-testreport/springboot-extentreport-demo1/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/06-api-management/springboot-swagger-demo/study6.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/06-api-management/springboot-swagger-demo/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/07-assert/springboot-assertj-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/07-assert/springboot-assertj-demo/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/07-assert/springboot-assertj-demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/07-assert/springboot-assertj-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/07-assert/springboot-assertj-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/08-mock/moco-demo/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/08-mock/moco-demo/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/08-mock/moco-demo/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/08-mock/moco-demo/moco demo.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/09-auto-notification/springboot-mail-sampler/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/09-auto-notification/springboot-mail-sampler/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/09-auto-notification/springboot-mail-sampler/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/09-auto-notification/springboot-mail-sampler/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/09-auto-notification/springboot-mail-sampler/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/10-https/springboot-https-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/10-https/springboot-https-demo/.mvn/application-http.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/10-https/springboot-https-demo/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/10-https/springboot-https-demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/10-https/springboot-https-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/10-https/springboot-https-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/11-tools/springboot-hutool-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java-api-test/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jenkins-ci/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/00-code-performance/contiperf/springboot-contiperf-demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/00-code-performance/contiperf/springboot-contiperf-demo/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/00-code-performance/contiperf/springboot-contiperf-demo/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/00-code-performance/contiperf/springboot-contiperf-demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/00-code-performance/contiperf/springboot-contiperf-demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/00-code-performance/contiperf/springboot-contiperf-demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/01-test-tool/jmeter/thrift-rpc/thrift-demo/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/01-test-tool/jmeter/thrift-rpc/thrift-demo/log/error.log.2018-08-06" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/01-test-tool/jmeter/thrift-rpc/thrift-demo/log/error.log.2018-08-07" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/01-test-tool/jmeter/thrift-rpc/thrift-demo/log/log.log.2018-08-06" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/01-test-tool/jmeter/thrift-rpc/thrift-demo/log/log.log.2018-08-09" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/02-testdata/picturetools/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/02-testdata/picturetools/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/02-testdata/picturetools/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/02-testdata/picturetools/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/02-testdata/picturetools/pttools.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Performance-testing/README.md" beforeDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf />
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FindInProjectRecents">
+    <dirStrings>
+      <dir>D:\WorkSpace-new\springboot\blog-example</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths />
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="136" />
-    <option name="height" value="39" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="blog-example" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blog-example" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-    </panes>
+  <component name="ProjectId" id="1jlDf5dHxOTbdFdjRStrFrKrrhw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="GO_FMT" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Java/RPC" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\WorkSpace-new\springboot\blog-example\Kubernetes" />
+      <recent name="D:\WorkSpace-new\springboot\blog-example\Operations" />
+      <recent name="D:\WorkSpace-new\springboot\blog-example\Java-api-test\03-log-framework\springboot-logback-elk-demo\src\main\resources" />
+      <recent name="D:\WorkSpace-new\springboot\blog-example\Java-api-test\03-log-framework\springboot-logback-elk-demo\src\main" />
+      <recent name="D:\WorkSpace-new\springboot\blog-example\Java-api-test\03-log-framework" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\WorkSpace-new\springboot\blog-example\Performance-testing" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="RestServicesNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.LogbackdemoApplicationTests.contextLoads">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LogbackdemoApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="logbackdemo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zuozewei.logbackdemo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zuozewei.logbackdemo" />
+      <option name="MAIN_CLASS_NAME" value="com.zuozewei.logbackdemo.LogbackdemoApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LogbackdemoApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="logbackdemo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zuozewei.logbackdemo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zuozewei.logbackdemo" />
+      <option name="MAIN_CLASS_NAME" value="com.zuozewei.logbackdemo.LogbackdemoApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
+    <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
       <properties />
       <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.LogbackdemoApplicationTests" />
+      <item itemvalue="JUnit.LogbackdemoApplicationTests.contextLoads" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.LogbackdemoApplicationTests.contextLoads" />
+        <item itemvalue="JUnit.LogbackdemoApplicationTests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -138,6 +260,12 @@
       <updated>1599031362004</updated>
       <workItem from="1599031363555" duration="1196000" />
       <workItem from="1599032677574" duration="72000" />
+      <workItem from="1600327826884" duration="5881000" />
+      <workItem from="1600740448097" duration="7797000" />
+      <workItem from="1602815310906" duration="570000" />
+      <workItem from="1604114907927" duration="277000" />
+      <workItem from="1604369887696" duration="911000" />
+      <workItem from="1604912615409" duration="489000" />
     </task>
     <task id="LOCAL-00001" summary="[*]调整目录">
       <created>1599031538530</created>
@@ -146,51 +274,64 @@
       <option name="project" value="LOCAL" />
       <updated>1599031538530</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="[+] 增加 [走进Java接口测试之工具类库 Hutool] demo">
+      <created>1600339972731</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1600339972731</updated>
+    </task>
+    <task id="LOCAL-00003" summary="[-] 删除文件夹">
+      <created>1600340118156</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1600340118156</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[+] 增加 k8s 部署资料">
+      <created>1600740686087</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1600740686087</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[+] 增加[走进Java接口测试之整合ELK实现日志收集]demo">
+      <created>1600757729645</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1600757729645</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[+]增加[Ubuntu 离线部署 nginx 设置反向代理]资料">
+      <created>1602815587648</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1602815587648</updated>
+    </task>
+    <task id="LOCAL-00007" summary="[+]增加分布式存储插件 Rook Ceph部署资料">
+      <created>1604115149623</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1604115149624</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1268000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <layout>
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="RestServices" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50053304" side_tool="true" weight="0.32996634" />
-      <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="MyBatis Log" order="7" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Tail" order="7" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.32996634" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.41526374" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21801706" />
-      <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
-    </layout>
+  <component name="TestHistory">
+    <history-entry file="LogbackdemoApplicationTests - 2020.09.22 at 11h 29m 28s.xml">
+      <configuration name="LogbackdemoApplicationTests" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="LogbackdemoApplicationTests - 2020.09.22 at 11h 29m 55s.xml">
+      <configuration name="LogbackdemoApplicationTests" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="LogbackdemoApplicationTests_contextLoads - 2020.09.22 at 14h 48m 50s.xml">
+      <configuration name="LogbackdemoApplicationTests.contextLoads" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -208,78 +349,126 @@
         <entry key="MAIN">
           <value>
             <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
               </option>
             </State>
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="[*]调整目录" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'" />
+    <MESSAGE value="[+] 增加 [走进Java接口测试之工具类库 Hutool] demo" />
+    <MESSAGE value="[-] 删除文件夹" />
+    <MESSAGE value="[+] 增加 k8s 部署资料" />
+    <MESSAGE value="[+] 增加[走进Java接口测试之整合ELK实现日志收集]demo" />
+    <MESSAGE value="[+]增加[Ubuntu 离线部署 nginx 设置反向代理]资料" />
+    <MESSAGE value="[+]增加分布式存储插件 Rook Ceph部署资料" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+]增加分布式存储插件 Rook Ceph部署资料" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Performance-testing/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-configuration-demo/src/main/filters/filter-dev.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Java-api-test/01-data-driven/springboot-configuration-demo/src/main/filters/filter-product.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Jenkins-ci/jenkins-maven-springboot/build.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-147" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Performance-testing/03-performance-monitoring/telegraf-Influxdb-grafana-jmx/examples/activemq.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-545" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Performance-testing/03-performance-monitoring/jmeter-elasticsearch-filebeats-kibana/filebeat.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1452" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1604370108603">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604370108603" />
+    <state x="660" y="293" key="git4idea.merge.GitPullDialog" timestamp="1604912671899">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="660" y="293" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604912671899" />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Python 3.6 interpreter library</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>blog-example</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>
