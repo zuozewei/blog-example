@@ -34,12 +34,7 @@
     <graylogPort>12201</graylogPort>
     <maxChunkSize>508</maxChunkSize>
     <useCompression>true</useCompression>
-    <encoder class="de.siegmar.logbackgelf.GelfEncoder">@Test
-      public void contextLoads() {
-      log.info("输出info");
-      log.debug("输出debug");
-      log.error("输出error");
-      }
+    <encoder class="de.siegmar.logbackgelf.GelfEncoder">
       <includeRawMessage>true</includeRawMessage>
       <includeMarker>true</includeMarker>
       <includeMdcData>true</includeMdcData>
