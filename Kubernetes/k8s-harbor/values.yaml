@@ -1,0 +1,141 @@
+#Ingress 网关入口配置
+expose:
+  type: ingress
+  tls:
+    ### 是否启用 https 协议
+    enabled: true
+  ingress:
+    hosts:
+      ### 配置 Harbor 的访问域名，需要注意的是配置 notary 域名要和 core 处第一个单词外，其余保持一致
+      core: hub.7d.com
+      notary: notary.7d.com
+    controller: default
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
+      ingress.kubernetes.io/proxy-body-size: "0"
+      #### 如果是 traefik ingress，则按下面配置：
+#      kubernetes.io/ingress.class: "traefik"
+#      traefik.ingress.kubernetes.io/router.tls: 'true'
+#      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      #### 如果是 nginx ingress，则按下面配置：
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.org/client-max-body-size: "0"
+
+## 如果Harbor部署在代理后，将其设置为代理的URL，这个值一般要和上面的 Ingress 配置的地址保存一致
+externalURL: https://hub.7d.com
+
+### Harbor 各个组件的持久化配置，并设置各个组件 existingClaim 参数为上面创建的对应 PVC 名称
+persistence:
+  enabled: true
+  ### 存储保留策略，当PVC、PV删除后，是否保留存储数据
+  resourcePolicy: "keep"
+  persistentVolumeClaim:
+    registry:
+      storageClass: "nfs-storage-new"
+      size: 20Gi
+    chartmuseum:
+      storageClass: "nfs-storage-new"
+      size: 5Gi
+    jobservice:
+      storageClass: "nfs-storage-new"
+      size: 1Gi
+    database:
+      storageClass: "nfs-storage-new"
+      size: 1Gi
+    redis:
+      storageClass: "nfs-storage-new"
+      size: 1Gi
+    trivy:
+      storageClass: "nfs-storage-new"
+      size: 5Gi
+
+### 默认用户名 admin 的密码配置，注意：密码中一定要包含大小写字母与数字
+harborAdminPassword: "admin@123"
+
+### 设置日志级别
+logLevel: info
+
+#各个组件 CPU & Memory 资源相关配置
+nginx:
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 500m
+portal:
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 500m
+core:
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 1000m
+jobservice:
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 500m
+registry:
+  registry:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+  controller:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+clair:
+  clair:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+  adapter:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+notary:
+  server:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+  signer:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+database:
+  internal:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+redis:
+  internal:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+trivy:
+  enabled: true
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+
+#开启 chartmuseum，使 Harbor 能够存储 Helm 的 chart
+chartmuseum:
+  enabled: true
+  resources:
+    requests:
+     memory: 256Mi
+     cpu: 500m
