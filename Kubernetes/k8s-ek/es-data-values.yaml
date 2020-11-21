@@ -1,0 +1,84 @@
+# ============设置集群名称============
+## 设置集群名称
+clusterName: "elasticsearch"
+## 设置节点名称
+nodeGroup: "data"
+## 设置角色
+roles:
+  master: "false"
+  ingest: "true"
+  data: "true"
+
+# ============镜像配置============
+## 指定镜像与镜像版本
+image: "docker.elastic.co/elasticsearch/elasticsearch"
+imageTag: "7.7.1"
+## 副本数
+replicas: 3
+
+# ============资源配置============
+## JVM 配置参数
+esJavaOpts: "-Xmx3g -Xms3g"
+## 部署资源配置(生成环境一定要设置大些)
+resources:
+  requests:
+    cpu: "1000m"
+    memory: "4Gi"
+  limits:
+    cpu: "1000m"
+    memory: "4Gi"
+## 数据持久卷配置
+persistence:
+  enabled: true
+## 存储数据大小配置
+volumeClaimTemplate:
+  storageClassName: managed-nfs-storage
+  accessModes: [ "ReadWriteOnce" ]
+  resources:
+    requests:
+      storage: 50Gi
+
+# ============安全配置============
+## 设置协议，可配置为 http、https
+protocol: http
+## 证书挂载配置，这里我们挂入上面创建的证书
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certificates
+    path: /usr/share/elasticsearch/config/certs
+## 允许您在/usr/share/elasticsearch/config/中添加任何自定义配置文件,例如 elasticsearch.yml
+## ElasticSearch 7.x 默认安装了 x-pack 插件，部分功能免费，这里我们配置下
+## 下面注掉的部分为配置 https 证书，配置此部分还需要配置 helm 参数 protocol 值改为 https
+esConfig:
+  elasticsearch.yml: |
+    xpack.security.enabled: true
+    xpack.security.transport.ssl.enabled: true
+    xpack.security.transport.ssl.verification_mode: certificate
+    xpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    xpack.security.transport.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    xpack.monitoring.exporters.my_local.type: local
+    xpack.monitoring.exporters.my_local.use_ingest: false
+    # xpack.security.http.ssl.enabled: true
+    # xpack.security.http.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    # xpack.security.http.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+## 环境变量配置，这里引入上面设置的用户名、密码 secret 文件
+extraEnvs:
+  - name: ELASTIC_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: username
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: password
+
+# ============调度配置============
+## 设置调度策略
+## - hard：只有当有足够的节点时 Pod 才会被调度，并且它们永远不会出现在同一个节点上
+## - soft：尽最大努力调度
+antiAffinity: "hard"
+## 容忍配置（一般 kubernetes master 或其它设置污点的节点，只有指定容忍才能进行调度，如果测试环境只有三个节点，则可以开启在 master 节点安装应用）
+#tolerations: 
+#  - operator: "Exists"  ##容忍全部污点

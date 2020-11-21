@@ -1,0 +1,42 @@
+# ============镜像配置============
+## 指定镜像与镜像版本
+image: "docker.elastic.co/kibana/kibana"
+imageTag: "7.7.1"
+
+## 配置 ElasticSearch 地址
+elasticsearchHosts: "http://elasticsearch-client:9200"
+
+
+# ============环境变量配置============
+## 环境变量配置，这里引入上面设置的用户名、密码 secret 文件
+extraEnvs:
+  - name: 'ELASTICSEARCH_USERNAME'
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: username
+  - name: 'ELASTICSEARCH_PASSWORD'
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: password
+
+# ============资源配置============
+resources:
+  requests:
+    cpu: "1000m"
+    memory: "1Gi"
+  limits:
+    cpu: "1000m"
+    memory: "1Gi"
+
+# ============配置 Kibana 参数============ 
+## kibana 配置中添加语言配置，设置 kibana 为中文
+kibanaConfig:
+  kibana.yml: |
+    i18n.locale: "zh-CN"
+
+# ============Service 配置============
+service:
+  type: NodePort
+  nodePort: "30601"
