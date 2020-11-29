@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-skywalking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-skywalking
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: demo-skywalking
+    spec:
+      initContainers:
+        - name: init-skywalking-agent
+          image: 172.16.106.237/monitor/skywalking-agent:8.1.0
+          command:
+            - 'sh'
+            - '-c'
+            - 'set -ex;mkdir -p /vmskywalking/agent;cp -r /skywalking/agent/* /vmskywalking/agent;'
+          volumeMounts:
+            - mountPath: /vmskywalking/agent
+              name: skywalking-agent
+      containers:
+        - image: nginx:1.7.9
+          imagePullPolicy: Always
+          name: nginx
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/skywalking/agent
+              name: skywalking-agent
+      volumes:
+        - name: skywalking-agent
+          emptyDir: {}
