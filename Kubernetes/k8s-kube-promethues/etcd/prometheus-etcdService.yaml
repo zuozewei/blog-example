@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: etcd-k8s
+  namespace: kube-system
+  labels:
+    k8s-app: etcd
+spec:
+  type: ClusterIP
+  clusterIP: None #设置为None，不分配Service IP
+  ports:
+    - name: port
+      port: 2381
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: etcd-k8s
+  namespace: kube-system
+  labels:
+    k8s-app: etcd
+subsets:
+  - addresses:
+      - ip: 172.16.106.200 # 指定etcd节点地址，如果是集群则继续向下添加
+        nodeName: etc-master
+    ports:
+      - name: port
+        port: 2381 # Etcd 端口号
