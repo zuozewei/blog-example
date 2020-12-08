@@ -32,16 +32,6 @@
             <stringProp name="Argument.value">${__P(duration,360)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="minWait" elementType="Argument">
-            <stringProp name="Argument.name">minWait</stringProp>
-            <stringProp name="Argument.value">${__P(minWait,2000)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="maxWait" elementType="Argument">
-            <stringProp name="Argument.name">maxWait</stringProp>
-            <stringProp name="Argument.value">${__P(maxWait,5000)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
           <elementProp name="playlistName" elementType="Argument">
             <stringProp name="Argument.name">playlistName</stringProp>
             <stringProp name="Argument.value">${__P(playlistName,playlist)}</stringProp>
@@ -50,16 +40,6 @@
           <elementProp name="path" elementType="Argument">
             <stringProp name="Argument.name">path</stringProp>
             <stringProp name="Argument.value">${__P(path,/vod/_definst_/smil:streaming_tutorial/streaming_tutorial.smil)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="bufferSize" elementType="Argument">
-            <stringProp name="Argument.name">bufferSize</stringProp>
-            <stringProp name="Argument.value">1000</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="bytesInBuffer" elementType="Argument">
-            <stringProp name="Argument.name">bytesInBuffer</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -116,47 +96,6 @@
         <boolProp name="CookieManager.clearEachIteration">true</boolProp>
         <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
       </CookieManager>
-      <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User experience metrics" enabled="true">
-        <collectionProp name="Arguments.arguments">
-          <elementProp name="bufferFillTime" elementType="Argument">
-            <stringProp name="Argument.name">bufferFillTime</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">Time for filling buffer with media chunks</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="totalDT" elementType="Argument">
-            <stringProp name="Argument.name">totalDT</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">Time spent for downloading of media chunks</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="totalPT" elementType="Argument">
-            <stringProp name="Argument.name">totalPT</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">Time required to play downloaded chunks</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="totalLT" elementType="Argument">
-            <stringProp name="Argument.name">totalLT</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">Total lag time occured during playback of a media file.</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="totalPTLT" elementType="Argument">
-            <stringProp name="Argument.name">totalPTLT</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">Real time, required for the playback, including lags.</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="lagTimeRatio" elementType="Argument">
-            <stringProp name="Argument.name">lagTimeRatio</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">Ratio of the lag time to the total playback time</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-        </collectionProp>
-      </Arguments>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
