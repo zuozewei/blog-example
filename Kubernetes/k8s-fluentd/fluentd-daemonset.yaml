@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-es
+  namespace: efk
+  labels:
+    k8s-app: fluentd-es
+    version: v3.0.2
+    addonmanager.kubernetes.io/mode: Reconcile
+spec:
+  selector:
+    matchLabels:
+      k8s-app: fluentd-es
+      version: v3.0.2
+  template:
+    metadata:
+      labels:
+        k8s-app: fluentd-es
+        version: v3.0.2
+      #此注释确保如果节点被驱逐，fluentd不会被驱逐
+      #支持关键的基于pod注释的优先级方案。
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
+    spec:
+      priorityClassName: fluentd-priority     #给 Fluentd 设置优先级资源
+      serviceAccountName: fluentd-es          #给 Fluentd 分配权限账户
+      #设置容忍所有污点，这样可以收集所有节点日志如 Master 节点一般都被设污，不设置无法在其节点启动 fluentd。
+      tolerations:
+      - operator: "Exists"
+      containers:
+      - name: fluentd-es
+        image: quay.io/fluentd_elasticsearch/fluentd:v3.0.2
+        env:
+        - name: FLUENTD_ARGS
+          value: --no-supervisor -q      #不启用管理，-q 命令用平静时期于减少warn级别日志（-qq：减少error日志）
+        - name: FLUENT_ELASTICSEARCH_HOST
+          value: "elasticsearch-client"
+        - name: FLUENT_ELASTICSEARCH_PORT
+          value: "9200"
+        - name: FLUENT_ELASTICSEARCH_SCHEME
+          value: "http"
+        - name: 'FLUENT_ELASTICSEARCH_USER' #环境变量配置，这里引入上面设置的用户名、密码 secret 文件
+          valueFrom:
+            secretKeyRef:
+              name: elastic-credentials
+              key: username
+        - name: 'FLUENT_ELASTICSEARCH_PASSWORD'
+          valueFrom:
+            secretKeyRef:
+              name: elastic-credentials
+              key: password
+        resources:
+          limits:
+            memory: 500Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+        - name: config-volume
+          mountPath: /etc/fluent/config.d
+      terminationGracePeriodSeconds: 30      #Kubernetes 将会给应用发送SIGTERM信号,用来优雅地关闭应用
+      volumes:
+      - name: varlog                         #将 Kubernetes 节点服务器日志目录挂入
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers         #挂入 Docker 容器日志目录
+        hostPath:
+          path: /var/lib/docker/containers
+      - name: config-volume                  #挂入 Fluentd 的配置参数
+        configMap:
+          name: fluentd-es-config
