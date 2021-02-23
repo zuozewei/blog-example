@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration>
+<configuration>
+    <!--引用默认日志配置-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--使用默认的控制台日志输出实现-->
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <!--应用名称-->
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="springBoot"/>
+    <!--日志文件保存路径-->
+    <property name="LOG_FILE_PATH" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/logs}"/>
+
+    <!--日志输出到控制台-->
+    <appender name="CONSOLE-LOG" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%d{yyyy-MM-dd' 'HH:mm:ss.sss}] [%C] [%t] [%L] [%-5p] %m%n</pattern>
+        </layout>
+    </appender>
+
+    <!--收集除error级别以外的日志-->
+    <appender name="INFO-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+            <!--设置为默认的文件日志格式-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>${LOG_INFO_HOME}//%d.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--设置路径及文件命名格式-->
+            <fileNamePattern>${LOG_FILE_PATH}/info/${APP_NAME}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!--设置日志文件大小，超过就重新生成文件，默认10M-->
+            <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+            <!--日志文件保留天数，默认30天-->
+            <maxHistory>${LOG_FILE_MAX_HISTORY:-30}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--ERROR日志输出到文件-->
+    <appender name="FILE_ERROR"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--只输出ERROR级别的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <!--设置为默认的文件日志格式-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--设置文件命名格式-->
+            <fileNamePattern>${LOG_FILE_PATH}/error/${APP_NAME}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!--设置日志文件大小，超过就重新生成文件，默认10M-->
+            <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+            <!--日志文件保留天数，默认30天-->
+            <maxHistory>${LOG_FILE_MAX_HISTORY:-30}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 异步输出 -->
+    <!--<appender name="ASYNC-INFO" class="ch.qos.logback.classic.AsyncAppender">-->
+        <!--&lt;!&ndash; 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 &ndash;&gt;-->
+        <!--<discardingThreshold>0</discardingThreshold>-->
+        <!--&lt;!&ndash; 更改默认的队列的深度,该值会影响性能.默认值为256 &ndash;&gt;-->
+        <!--<queueSize>256</queueSize>-->
+        <!--&lt;!&ndash; 添加附加的appender,最多只能添加一个 &ndash;&gt;-->
+        <!--<appender-ref ref="INFO-LOG"/>-->
+    <!--</appender>-->
+
+    <!--<appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">-->
+        <!--&lt;!&ndash; 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 &ndash;&gt;-->
+        <!--<discardingThreshold>0</discardingThreshold>-->
+        <!--&lt;!&ndash; 更改默认的队列的深度,该值会影响性能.默认值为256 &ndash;&gt;-->
+        <!--<queueSize>256</queueSize>-->
+        <!--&lt;!&ndash; 添加附加的appender,最多只能添加一个 &ndash;&gt;-->
+        <!--<appender-ref ref="ERROR-LOG"/>-->
+    <!--</appender>-->
+
+    <root level="info">
+        <appender-ref ref="CONSOLE-LOG" />
+        <appender-ref ref="INFO-LOG" />
+        <appender-ref ref="ERROR-LOG" />
+        <!--异步输出日志-->
+        <!--<appender-ref ref="ASYNC-INFO" />-->
+        <!--<appender-ref ref="ASYNC-ERROR" />-->
+    </root>
+</configuration>
