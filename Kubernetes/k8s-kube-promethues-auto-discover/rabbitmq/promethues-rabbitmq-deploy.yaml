@@ -1,0 +1,113 @@
+## Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+    - name: rabbitmq
+      port: 5672
+      targetPort: 5672
+    - name: rabbitmq-management
+      port: 15672
+      targetPort: 15672
+    - name: prom
+      port: 9419
+      targetPort: 9419
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cloud-rabbitmq
+spec:
+  rules:
+    - host: cloud-rabbitmq.mall.demo.7d.com
+      http:
+        paths:
+          - backend:
+              serviceName: cloud-rabbitmq
+              servicePort: 15672
+---
+## Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9419"
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3.7.15-management
+          ports:
+            - containerPort: 5672
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            tcpSocket:
+              port: 5672
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            tcpSocket:
+              port: 5672
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/rabbitmq/
+            - name: localtime
+              readOnly: true
+              mountPath: /etc/localtime
+        - name: rabbitmq-exporter
+          image: kbudde/rabbitmq-exporter:latest
+          env:
+            - name: RABBIT_URL
+              value: "http://cloud-rabbitmq:15672" 
+            - name: RABBIT_USER
+              value: "guest"  
+            - name: RABBIT_PASSWORD
+              value: "guest"  
+            - name: PUBLISH_PORT
+              value: "9419"         
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 9419
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: rabbitmq
+        - name: localtime
+          hostPath:
+            type: File
+            path: /etc/localtime
