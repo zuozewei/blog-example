@@ -74,7 +74,7 @@ df_groupd_mean= df_groupd.mean()
 df_groupd_size= df_groupd.size()
 
 '''
-数据装置
+数据装载
 '''
 df_ana=pd.concat([df_groupd_max,df_groupd_min,df_groupd_mean,df_groupd_size],axis=1,keys=["max","min","average","count"])
 print ("output excel")
