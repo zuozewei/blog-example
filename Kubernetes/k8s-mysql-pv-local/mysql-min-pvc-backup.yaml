@@ -1,0 +1,34 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    #当启用PVC 保护 alpha 功能时，如果用户删除了一个 pod 正在使用的 PVC，则该 PVC 不会被立即删除。PVC 的删除将被推迟，直到 PVC 不再被任何 pod 使用。
+    #可以看到，当 PVC 的状态为 Teminatiing 时，PVC 受到保护，Finalizers 列表中包含 kubernetes.io/pvc-protection：
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: mysql-min
+      release: mysql-min
+    name: mysql-min-backup
+    namespace: default
+  spec:
+    #PV 的访问模式（accessModes）有三种：
+    #ReadWriteOnce（RWO）：是最基本的方式，可读可写，但只支持被单个 Pod 挂载。
+    #ReadOnlyMany（ROX）：可以以只读的方式被多个 Pod 挂载。
+    #ReadWriteMany（RWX）：这种存储可以以读写的方式被多个 Pod 共享。
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: mysql-min-storageclass-nfs
+    #表示使用本地磁盘，实际生产中一般都使用nfs。
+    volumeMode: Filesystem
+    volumeName: mysql-min-pv-local
+#  status:
+#    accessModes:
+#    - ReadWriteOnce
+#    capacity:
+#      storage: 1Gi
+kind: List

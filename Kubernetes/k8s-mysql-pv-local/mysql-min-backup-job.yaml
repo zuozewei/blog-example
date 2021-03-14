@@ -1,0 +1,45 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: mysql-backup
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mysql-min-backup
+              imagePullPolicy: IfNotPresent
+              image: centos/mysql-57-centos7:latest
+              env:
+                #password存储在secret中
+                - name: MYSQL_ROOT_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: mysql-root-password
+                      name: mysql-min
+                - name: MYSQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: mysql-password
+                      name: mysql-min
+                - name: MYSQL_HOST
+                  value: mysql-min
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -ex
+                  mysqldump --host=$MYSQL_HOST --user=$MYSQL_ROOT_PASSWORD \
+                            --password=$mysql-root-password \
+                            --routines --databases mall --single-transaction \
+                            > /mysql-backup/mysql-`date +"%Y%m%d"`.sql
+              volumeMounts:
+                - name: mysql-min-backup
+                  mountPath: /mysql-min-backup
+          restartPolicy: OnFailure
+          volumes:
+            - name: mysql-min-backup
+              persistentVolumeClaim:
+                claimName: mysql-min-backup

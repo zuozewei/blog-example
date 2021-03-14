@@ -1,0 +1,10 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: mysql-min-storageclass-local
+#指定存储类的供应者,比如aws, nfs等，具体取值参考官方说明。
+#存储类有一个供应者的参数域，此参数域决定PV使用什么存储卷插件。参数必需进行设置
+#由于demo中使用的是本地存储，所以这里写kubernetes.io/no-provisioner.
+provisioner: kubernetes.io/no-provisioner
+#volumeBindingMode 参数将延迟PVC绑定，直到 pod 被调度。
+volumeBindingMode: WaitForFirstConsumer

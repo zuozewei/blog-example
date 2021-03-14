@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  generation: 1
+  labels:
+    app: mysql-min
+    release: mysql-min
+  name: mysql-min
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-min
+  strategy:
+    rollingUpdate:
+      maxSurge: 1 #滚动升级时会先启动1个pod
+      maxUnavailable: 1 #滚动升级时允许的最大Unavailable的pod个数
+    type: RollingUpdate #滚动升级
+  template:
+    metadata:
+      labels:
+        app: mysql-min
+    spec:
+      containers:
+        - env:
+            #password存储在secret中
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-root-password
+                  name: mysql-min
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-password
+                  name: mysql-min
+            - name: MYSQL_USER
+              value: apollo
+          image: centos/mysql-57-centos7:latest
+          imagePullPolicy: IfNotPresent
+          #kubelet 使用 liveness probe（存活探针）来确定何时重启容器。例如，当应用程序处于运行状态但无法做进一步操作，liveness 探针将捕获到 deadlock，重启处于该状态下的容器，使应用程序在存在 bug 的情况下依然能够继续运行下去
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - "-c"
+                - MYSQL_PWD="${MYSQL_ROOT_PASSWORD}"
+                - mysql -h 127.0.0.1 -u root -e "SELECT 1"
+            failureThreshold: 3 #探测成功后，最少连续探测失败多少次才被认定为失败。默认是 3。最小值是 1。
+            initialDelaySeconds: 30 #容器启动后第一次执行探测是需要等待多少秒。
+            periodSeconds: 10 #执行探测的频率。默认是10秒，最小1秒。
+            successThreshold: 1 #探测失败后，最少连续探测成功多少次才被认定为成功。默认是 1。对于 liveness 必须是 1。最小值是 1。
+            timeoutSeconds: 5 #探测超时时间。默认1秒，最小1秒。
+          name: mysql-min
+          ports:
+            - containerPort: 3306
+              name: mysql
+              protocol: TCP
+          #Kubelet 使用 readiness probe（就绪探针）来确定容器是否已经就绪可以接受流量。只有当 Pod 中的容器都处于就绪状态时 kubelet 才会认定该 Pod处于就绪状态。该信号的作用是控制哪些 Pod应该作为service的后端。如果 Pod 处于非就绪状态，那么它们将会被从 service 的 load balancer中移除。
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - "-c"
+                - MYSQL_PWD="${MYSQL_ROOT_PASSWORD}"
+                - mysql -h 127.0.0.1 -u root -e "SELECT 1"
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          #为了达到一个相当高水平的实用性，特别是为了积极开发应用，快速调试失败是很重要的。除了一般的日志采集，Kubernetes还能通过查出重大错误原因来加速调试，并在某种程度上通过kubectl或者UI陈列出来。可以指定一个’terminationMessagePath’来让容器写下它的“death rattle“，比如声明失败消息，堆栈跟踪，免责条款等等。默认途径是‘/dev/termination-log’。
+          terminationMessagePath: /dev/termination-log
+          # 此字段默认为 “File“，这意味着仅从终止消息文件中检索终止消息。 通过将 terminationMessagePolicy 设置为 “FallbackToLogsOnError“，你就可以告诉 Kubernetes，在容器因错误退出时，如果终止消息文件为空，则使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
+          terminationMessagePolicy: File
+          #要使用的数据盘目录，在initContainer中会关联此处目录。
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: data
+            - name: mysql-config
+              mountPath: /etc/my.cnf.d/my.cnf
+              subPath: my.cnf
+            - name: localtime
+              readOnly: true
+              mountPath: /etc/localtime
+      dnsPolicy: ClusterFirst
+      #Init 容器支持应用容器的全部字段和特性，包括资源限制、数据卷和安全设置。 然而，Init 容器对资源请求和限制的处理稍有不同，在下面 资源 处有说明。 而且 Init 容器不支持 Readiness Probe，因为它们必须在 Pod 就绪之前运行完成。
+      #如果为一个 Pod 指定了多个 Init 容器，那些容器会按顺序一次运行一个。 每个 Init 容器必须运行成功，下一个才能够运行。 当所有的 Init 容器运行完成时，Kubernetes 初始化 Pod 并像平常一样运行应用容器。
+      #mysql这里的initContainer是为了保证在POD启动前，PV盘要先行绑定成功。
+      initContainers:
+        - command:
+            - rm
+            - -fr
+            - /var/lib/mysql/lost+found
+          image: busybox:1.29.3
+          imagePullPolicy: IfNotPresent
+          name: remove-lost-found
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: data
+      restartPolicy: Always
+      #scheduler 是 kubernetes 的调度器，主要的任务是把定义的 pod 分配到集群的节点上。
+      schedulerName: default-scheduler
+      securityContext: {}
+      #如果您的Pod通常需要超过30秒才能关闭，请确保增加优雅终止宽限期。可以通过在Pod YAML中设置terminationGracePeriodSeconds选项来实现.
+      #如果容器在优雅终止宽限期后仍在运行，则会发送SIGKILL信号并强制删除。与此同时，所有的Kubernetes对象也会被清除。
+      terminationGracePeriodSeconds: 30
+      #定义数据卷PVC,与PV匹配。
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: mysql-min
+        - name: mysql-config
+          configMap:
+            name: mysql-config
+        - name: localtime
+          hostPath:
+            type: File
+            path: /etc/localtime

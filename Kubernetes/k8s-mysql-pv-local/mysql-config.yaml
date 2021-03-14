@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  my.cnf: |
+    [mysqld]
+    default_storage_engine=innodb
+    skip_external_locking
+    lower_case_table_names=1
+    skip_host_cache
+    skip_name_resolve
+
+    max_connections=2000
+    innodb_buffer_pool_size=8589934592
+    init_connect='SET collation_connection = utf8_unicode_ci'
+    init_connect='SET NAMES utf8'
+    character-set-server=utf8
+    collation-server=utf8_unicode_ci
+    skip-character-set-client-handshake
+    query_cache_type=0
+    innodb_flush_log_at_trx_commit = 0
+    sync_binlog = 0
+    query_cache_size = 104857600
+    slow_query_log =1
+    slow_query_log_file=/var/lib/mysql/slow-query.log
+    log-error=/var/lib/mysql/mysql.err
+    long_query_time = 0.02
+    table_open_cache_instances=16
+    table_open_cache = 6000
+    skip-grant-tables
+    sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-min-pv-local
+  namespace: default
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "mysql-min-storageclass-local"
+  persistentVolumeReclaimPolicy: Retain
+  #表示使用本地存储
+  local:
+    path: /mnt/disks/vol1
+  #使用local pv时必须定义nodeAffinity，Kubernetes Scheduler需要使用PV的nodeAffinity描述信息来保证Pod能够调度到有对应local volume的Node上。
+  #创建local PV之前，你需要先保证有对应的storageClass已经创建。
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          # pod 需要分不到的主机名，这台主机上开启了 local-pv 资源。
+          - node-1
