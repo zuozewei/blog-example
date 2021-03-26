@@ -1,0 +1,16 @@
+global:
+  scrape_interval:     60s
+  evaluation_interval: 60s
+ 
+scrape_configs:
+  - job_name: node
+    static_configs:
+      - targets: ['172.16.106.119:9100']
+        labels:
+          instance: lenvo-nfs-server
+      - targets: ['172.16.106.160:9100']
+        labels:
+          instance: Dell-PowerEdge-R820-2
+      - targets: ['172.16.106.74:9100']
+        labels:
+          instance: Dell-PowerEdge-R820-3
