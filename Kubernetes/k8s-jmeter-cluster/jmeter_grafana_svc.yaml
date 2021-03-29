@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jmeter-grafana
+  labels:
+    app: jmeter-grafana
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: jmeter-grafana
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/service-weight: 'jmeter-grafana: 100'
+  name: jmeter-grafana-ingress
+spec:
+  rules:
+  # 配置七层域名
+  - host: grafana-jmeter.7d.com
+    http:
+      paths:
+      # 配置Context Path
+      - path: /
+        backend:
+          serviceName: jmeter-grafana
+          servicePort: 3000
