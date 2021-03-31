@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 获取 flag 配置类-->
+    <conversionRule conversionWord="flag" converterClass="com.zuozewei.flagtrack.config.FlagPatternConverter" />
+    <!-- 自定义 logback 日志格式-->
+    <property name="CUSTOM_LOG_PATTERN"
+              value="[[[%date{yyyy-MM-dd HH:mm:ss} | %-5level | %flag | %thread | %file:%line | %logger : %.1000m]]]%n" />
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CUSTOM_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <!-- 控制台打印 -->
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
