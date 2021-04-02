@@ -21,7 +21,7 @@ public class FlagTrackInterceptor implements HandlerInterceptor {
     /**
      * 存储 flag
      */
-    private static final ThreadLocal<String> TRACE_ID_THREAD_LOCAL = new ThreadLocal<>();
+    private static final ThreadLocal<String> FLAG_THREAD_LOCAL = new ThreadLocal<>();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -30,22 +30,22 @@ public class FlagTrackInterceptor implements HandlerInterceptor {
          */
         String flag = Optional.ofNullable(request.getHeader("flag")).orElse(UUID.randomUUID().toString().replaceAll("-",""));
         // 请求前设置
-        TRACE_ID_THREAD_LOCAL.set(flag);
+        FLAG_THREAD_LOCAL.set(flag);
         return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         // 移除，防止内存泄漏
-        TRACE_ID_THREAD_LOCAL.remove();
+        FLAG_THREAD_LOCAL.remove();
     }
 
     public static String getFlag() {
-        return TRACE_ID_THREAD_LOCAL.get();
+        return FLAG_THREAD_LOCAL.get();
     }
 
     public static void setFlag(String flag){
-        TRACE_ID_THREAD_LOCAL.set(flag);
+        FLAG_THREAD_LOCAL.set(flag);
     }
 
 }
