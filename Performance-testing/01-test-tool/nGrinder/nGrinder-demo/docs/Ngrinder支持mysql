@@ -1,0 +1,36 @@
+Ngrinder数据库默认支持使用H2和CUBRID， CUBRID是naver研发的，好像使用的人不多~ 一开始使用H2数据库。H2数据库是开源的java数据库，支持浏览器模式访问。但是在用H2 Console访问数据库时发现ngrinder的数据库连接会断开（后来发现配置问题，改成非本地模式就可以了）。考虑到现在内部工具很多使用mysql，所有准备把数据库切换成mysql。
+ngrinder跟数据关联的地方有两块。
+1. 数据库的初始化，更新。
+使用liquibase管理数据库变化，使用xml描述changelog。存放在ngrinder_agent_home_template/db.changelog.xml。 这个文件是主入口，后面所有的更新可以通过新增changelog文件并把文件include到这个文件里面。 changeset有个属性dbms, 用来做数据库分类过滤，表示当前的changeset要应用到哪个类型的数据库。
+ngrinder直接在maven pom里应用liquibase-core，通过java api实现对数据库的管理。
+新增一个数据库类型支持需要先在Database类下新增一项
+mysql, 需要指定几个构造函数参数，1， jdbc driver的类，可以从mysql-connector中获取。2， 指定Dialect， Dialect是liquibase类型和mysql类型的映射。3 是连接的url
+Ngrinder正对liquibase做了一些扩展，主要是有些布尔值存数据库ngrinder用的是char（1）类型，使用'T', 'F'来表示true或fase，没去了解为啥这么做。在做mysql支持的时候也是默认按他这种做法处理。
+定义MySQLExTypeConverter, 参考H2ExTypeConverter, 主要是处理布尔值。
+定义MySQLExDialect， 映射boolean到char（1），参考H2。 还有一点是mysql默认使用InnoDB engine，数据库表定义所有字段长度除TEXT 和CLOB外不允许超过65535，ngrinder的perf-test表远远超过这个长度，所以需要把一些超长的字段定义成text类型，但是text不是liquibase识别的类型，所以需要在dialect做nvarchar 到text的映射。
+把各个表里面timestamp类型的字段改成datetime，mysql会对timestamp类型的字段做特殊处理。
+在没有改之前，数据库能正常初始化并启动，但是执行test的时候发现任务总是被挂起并没有执行。捉包分析看到test在save到db的时候只给create_time和last_modify_time赋值，start_time和schedule_time和finish_time为空，数据库会自己处理把他按时区转换，所以看到数据库存的starttime是不匹配的。
+2. 运行时数据的持久化，使用hibernate做数据库持久化。
+因为之前有些字段从varchar改成text，但是model上面有字段长度的validation，直接把validation去掉。
+mysql 连接的配置如下：
+database.type=mysql
+database.url=jdbc:mysql://localhost:3306/pftest?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&nullNamePatternMatchesAll=true&nullCatalogMeansCurrent=true
+database.username=pftest
+database.password=a
+url连接后面跟的一堆参数是对数据库连接的配置。
+nullCatalogMeansCurrent: 没有这个配置前一个mysql数据库只有一个schema的时候没问题，有多个schema的时候就会报错，因为使用liquibase默认的databasemeta去找liquibase的databasechangloglock表时会遍历当前连接下所有的schema，所以会报错。
+useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+指定db的时区，按UTC标准时间来存储datetime的值。
+————————————————
+版权声明：本文为CSDN博主「randall_hong」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/Randall_Hong/article/details/80022140
+
+
+性能测试工具-Ngrinder使用之IDEA脚本开发环境配置
+https://www.cnblogs.com/xiaowei89426/p/9365211.html
+进入ngrinder controller页面，添加一个groovy maven project，如图
+创建成功后，页面如图，自动生成一个svn地址
+.复制该SVN地址，如果IDEA添加了SVN插件，可以直接在SVN打开该地址，我没有SVN插件，所以在文件夹中check out该SVN路径，然后使用IDEA打开，SVN的账号密码为登录ngrinder controller的账号密码，打开后编写代码即可
+需要导入2个jar包，groovy-2.4.12.jar，ngrinder-runtime-3.4.1.jar
+解决办法：在Run->Run Configurations添加-javaagent:C:\maven_repository\net\sf\grinder\grinder-dcr-agent\3.9.1\grinder-dcr-agent-3.9.1.jar
+

@@ -1,0 +1,44 @@
+1、pom添加mysql驱动
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.16</version>
+		</dependency>
+
+
+
+2、在controller项目中找到Database枚举类
+添加mysql项
+
+/**
+     * mysql
+     */
+    mysql(com.mysql.jdbc.Driver.class, org.hibernate.dialect.MySQL5Dialect.class, "jdbc:mysql://%s?%s") {
+        @Override
+        protected void setupVariants(BasicDataSource dataSource, PropertiesWrapper databaseProperties) {
+            dataSource.setUrl(String.format(getUrlTemplate(),
+                databaseProperties.getProperty(DatabaseConfig.PROP_DATABASE_URL),
+                StringUtils.trimToEmpty(databaseProperties.getProperty(DatabaseConfig.PROP_DATABASE_URL_OPTION))));
+            dataSource.setUsername(databaseProperties.getProperty(DatabaseConfig.PROP_DATABASE_USERNAME));
+            dataSource.setPassword(databaseProperties.getProperty(DatabaseConfig.PROP_DATABASE_PASSWORD));
+        }
+    };
+
+3、根据xml的sql语句初始化数据库
+
+4、找到ngrinder的配置文件database.conf，配置数据库连接
+
+database.type=mysql
+database.url=localhost:3306/pftest
+database.url_option=useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&nullNamePatternMatchesAll=true&nullCatalogMeansCurrent=true
+database.username=root
+database.password=*****
+
+原文链接：https://blog.csdn.net/lijie1010/article/details/80655037

@@ -1,0 +1,238 @@
+1、生成随机字符串（import org.apache.commons.lang.RandomStringUtils）
+        数字：RandomStringUtils.randomNumeric(length);
+        字母：RandomStringUtils.randomAlphabetic(length);
+        字母加数字：RandomStringUtils.randomAlphanumeric(length);
+        所有ASCCII字符：RandomStringUtils.randomAscii(length);
+        自定义混合字符：RandomStringUtils.randomAscii(length, string);
+
+2、生成随机数字：（import java.util.concurrent.ThreadLocalRandom;）
+        数字：int random_number = ThreadLocalRandom.current().nextInt(min_num, max_num);
+
+3、获取项目数据文件路径
+        common项目："/resources/account.txt"
+        maven项目：Thread.currentThread().getContextClassLoader().getResource("/account.txt").getPath();
+        maven项目获取文件内容：ReflectionUtils.getCallingClass(0).getResourceAsStream("/account.txt").getText("UTF-8")
+4、读取文件：
+        txt每行单数据：   String[] file_arrary = new File("/resources/account.txt") as String[];
+                        String file_data = file_arrary[arrary_index];
+
+        txt每行双数据：   String[] file_arrary = new File("/resources/account.txt") as String[];
+                        String data_one = file_arrary[arrary_index].split(",")[0];
+                        String data_two = file_arrary[arrary_index].split(",")[1];
+        另一种方法：
+                        List<String> reqDataArrList = new File(dataFilePath).readLines()
+                        String data_one = reqDataArrList.get(arrary_index).split(",")[0];
+                        String data_two = reqDataArrList.get(arrary_index).split(",")[1];
+
+        txt每行多数据可参考双数据方法。也可以参考json方式存储：
+                                    BufferedReader txt_content=new BufferedReader(new FileReader(new File("/resources/account.txt")))
+                                    data_json = new JSONObject()
+                                    String text_line = ""
+                                    while(( text_line=txt_content.readLine())!=null){
+                                        data_json.put(text_line.split(",")[0],text_line.split(",")[1])
+                                    }
+                                    String data_one = data_json.keys[0]
+                                    String data_two = data_json.getString(data_one)
+5、写入文件：
+        覆盖写入：   def write = new File(file_path, file_name).newPrintWriter();
+                            write.write(write_text);
+                            write.flush();
+                            write.close()
+
+        追加写入：   def write = new File(file_path, file_name).newPrintWriter();
+                            write.append(write_text);
+                            write.flush();
+                            write.close()
+
+6、json文件的数据处理(import org.ngrinder.recorder.RecorderUtils)
+        json文件读取：   String json_str = new File(file_path).getText("UTF-8")
+                                    def json_object = RecorderUtils.parseRequestToJson(json_str)
+
+                                    长度：json_object.length()
+                                    关键字：json_object.keys()
+                                    添加元素：json_object.put(name, value)
+                                    修改元素：json_object.put(name, value)
+                                    删除元素：json_object.remove(name, value)
+                                    获取对应value：json_object.getString(name)
+
+7、字符串的处理
+        字符串截取：String new_str = old_str[0..3]
+        字符串替换：String string = str.replace("old","new")
+        字符串统计：int count = string.count("char")
+        字符串转化：int int_num = Integer.parseInt(string)
+
+1、设置多个请求事务(即多个test方法)
+        1)设置多个静态Gtest对象：
+            public static GTest test1
+            public static GTest test2
+        2)实例化多个Gtest对象：
+            test1 = new GTest(1, "test1");
+            test2 = new GTest(2, "test2");
+        3)监听多个test请求：
+            test1.record(this, "test1")
+            test2.record(this, "test2")
+        4)定义多个test方法：
+            public void test1(){
+                grinder.logger.info("---ones: {}---", grinder.threadNumber+1)
+            }
+            public void test2(){
+                grinder.logger.info("---twos: {}---", grinder.threadNumber+1)
+            }
+
+2、Ngrinder定义请求参数集：
+        add方法：  List<NVPair> paramList = new ArrayList<NVPair>();
+                            paramList.add(new NVPair("name", "value"));
+                            paramList.add(new NVPair("name", "value"));
+                            params = paramList.toArray();
+
+        new方法：  params = [new NVPair("name", "value"), new NVPair("name", "value")];
+
+3、Ngrinder处理日志：
+        日志级别(三种常见)： grinder.logger.info("----before process.----");
+                                                grinder.logger.warn("----before process.----");
+                                                grinder.logger.error("----before process.----");
+
+        日志限定(仅打印error级别) ：
+                                    1)导入依赖包
+                                    import ch.qos.logback.classic.Level;
+                                    import org.slf4j.LoggerFactory;
+                                    2)设定级别
+                                    @BeforeThread
+                                        LoggerFactory.getLogger("worker").setLevel(Level.ERROR);
+                                    3)设置打印语句
+                                    @test
+                                        grinder.logger.error("----error.----");
+        日志输出(输出所有进程日志)：将每个agent的.ngrinder_agent/agent.conf中一项修改为agent.all_logs=true
+
+        日志打印：打印变量：grinder.logger.error("{},{}",variable1,variable2); // 换行或缩进可在""中加\n或\t
+
+4、Ngrinder的cookie处理
+        1) 登录产生cookie
+            @BeforeThread
+                login_get_cookie(); // 调用登录方法
+                cookies = CookieModule.listAllCookies(HTTPPluginControl.getThreadHTTPClientContext()); // 配置cookie管理器
+        2) 读取控制器中cookie
+            @Before
+                cookies.each { CookieModule.addCookie(it, HTTPPluginControl.getThreadHTTPClientContext()) }
+
+5、Ngrinder请求方式：
+        1)通过url加参数直接访问：
+            post方法： HTTPResponse result = request.POST("http://192.168.2.135:8080/blogs", params, headers)
+            get方法：  HTTPResponse result = request.GET("http://192.168.2.135:8080/blogs", params, headers)
+            参数是json：设置请求头参数{"Content-Type": "application/json"}
+        2)通过参数化所有请求数据为json对象(导入import org.ngrinder.recorder.RecorderUtils)
+                            HTTPResponse result = RecorderUtils.sendBy(request, req_data_json)
+                            HTTPResponse result = RecorderUtils.sendBy(request, req_data_json)
+
+6、Ngringer的test运行次数设定(将总运行测试次数按百分比例分配到相应test)：
+        1)引用依赖包：
+            import net.grinder.scriptengine.groovy.junit.annotation.RunRate
+        2)设置运行次数百分比(所有test设定的比例值不够100，那不满的部分不运行，比如设定总比80，只运行这80部分)：
+            @RunRate(50)  // 数字代表百分比
+            @Test
+            public void test1(){}
+            @RunRate(50)  // 数字代表百分比
+            @Test
+            public void test2(){}
+
+7、Ngringer获取设置的加压机总数、进程总数、线程总数等信息：
+        int tota_agents = Integer.parseInt(grinder.getProperties().get("grinder.agents").toString()) // 设置的总加压机数
+        int total_processes = Integer.parseInt(grinder.properties().get("grinder.processes").toString()) // 设置的总进程数
+        int total_threads = Integer.parseInt(grinder.properties().get("grinder.threads").toString()) // 设置的总线程数
+        int total_runs = Integer.parseInt(grinder.properties().get("grinder.runs").toString()) // 设置的总运行次数(若设置的是运行时长，则得到0)
+
+8、Ngringer获取当前运行的加压机编号、进程编号、线程编号等信息(都从0递增)：
+        int agent_number = grinder.agentNumber // 当前运行的加压机编号
+        int process_number = grinder.processNumber // 当前运行的进程编号
+        int thread_number = grinder.threadNumber // 当前运行的线程编号
+        int run_number = grinder.runNumber // 当前运行的运行次数编号
+
+9、Ngringer获取唯一递增值方法(从1递增，不重复)：
+        // 传递接口参数runNumber(即def runNumber = grinder.runNumber)
+        private int getIncrementId(int runNumber){
+            // 获取压力机总数、进程总数、线程总数
+            int totalAgents = Integer.parseInt(grinder.getProperties().get("grinder.agents").toString())
+            int totalProcess = Integer.parseInt(grinder.getProperties().get("grinder.processes").toString())
+            int totalThreads = Integer.parseInt(grinder.getProperties().get("grinder.threads").toString())
+
+            // 获取当前压力机数、进程数、线程数
+            int agentNum = grinder.agentNumber
+            int processNum = grinder.processNumber
+            int threadNum = grinder.threadNumber
+
+            // 获取唯一递增数id
+            int incrementId = agentNum * totalProcess * totalThreads + processNum * totalThreads + threadNum + totalAgents * totalProcess * totalThreads * runNumber
+            return incrementId
+        }
+
+10、Ngringer根据唯一递增值获取参数化文件中的唯一行号：
+        1)需要设置静态变量：private enum WhenOutOfValues { AbortVuser, ContinueInCycleManner, ContinueWithLastValue }
+        2)传递接口参数fileDataList(即def fileDataList = new File(dataFilePath).readLines())
+        private int getLineNum(def fileDataList) {
+            // 获取当前运行数、数据读取行数、数据最大行数
+            int counter = getIncrementId(grinder.runNumber)
+            int lineNum = counter + 1
+            int maxLineNum = fileDataList.size() - 1
+
+            // 读取最大值的判断处理
+            WhenOutOfValues outHandler = WhenOutOfValues.AbortVuser
+            if (lineNum > maxLineNum) {
+                 if(outHandler.equals(WhenOutOfValues.AbortVuser)) {
+                    lineNum = maxLineNum //grinder.stopThisWorkerThread()
+                 } else if (outHandler.equals(WhenOutOfValues.ContinueInCycleManner)) {
+                    lineNum = (lineNum - 1) % maxLineNum + 1
+                 } else if (outHandler.equals(WhenOutOfValues.ContinueWithLastValue)) {
+                     lineNum = maxLineNum
+                 }
+            }
+            return lineNum
+        }
+11、Ngrinder日志输出配置的测试信息：(import java.text.SimpleDateFormat)
+        public static String getTestInfo(){
+            String time_string = ""
+            // 获取压测时设置的进程总数、线程总数、运行次数并在log中打印
+            int all_process = grinder.getProperties().getInt("grinder.processes", 1) // 设置的总进程数
+            int all_threads = grinder.getProperties().getInt("grinder.threads", 1)  // 设置的总线程数
+            int all_runs = grinder.getProperties().getInt("grinder.runs", 1)  // 设置的总运行次数(若设置的是运行时长，则得到0)
+            int all_duration = grinder.getProperties().getLong("grinder.duration", 1) // 设置的总运行时长(若设置的是运行次数，则得到0)
+            // 格式化时间毫秒输出(输出格式00:00:00)
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss")
+            formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"))
+            String all_duration_str = formatter.format(all_duration)
+            if (all_duration_str.equals("00:00:00"))
+                time_string = "Test information: the processes is "+all_process+", the threads is "+all_threads+", the run count is "+all_runs+"."
+            else
+                time_string = "Test information: the processes is "+all_process+", the threads is "+all_threads+", the run time is "+all_duration_str+"."
+            return time_string
+        }
+12、Ngrinder打印所有的配置信息
+            String property = grinder.getProperties();
+            grinder.logger.info("------- {}", property) ;
+
+13、Ngrinder获取请求返回值：
+            HTTPResponse result = request.POST("http://192.168.2.135:8080/blogs", params, headers)
+            返回的文本：grinder.logger.info("----{}----", result.getText()) // 或者result.text
+            返回的状态码：grinder.logger.info("----{}----", result.getStatusCode()) // 或者result.statusCode
+            返回的url：grinder.logger.info("----{}----", result.getEffectiveURI())
+            返回的请求头所有参数：grinder.logger.info("---\n{}---", result)
+            返回的请求头某参数：grinder.logger.info("----{}---- ", result.getHeader("Content-type"))
+
+14、Ngrinder返回值的匹配：
+    匹配状态码：assertThat(result.getStatusCode(), is(200))
+    匹配包含文本：assertThat(result.getText(), containsString("success"))
+
+15、Ngrinder获取所有虚拟用户数：
+    public int getVusers() {
+        int totalAgents = Integer.parseInt(grinder.getProperties().get("grinder.agents").toString());
+        int totalProcesses = Integer.parseInt(grinder.getProperties().get("grinder.processes").toString());
+        int totalThreads = Integer.parseInt(grinder.getProperties().get("grinder.threads").toString());
+        int vusers = totalAgents * totalProcesses * totalThreads;
+        return vusers;
+    }
+16、Ngrinder的断言和error日志输出
+    if (result.statusCode == 301 || result.statusCode == 302) {
+            grinder.logger.error("Possible error: {} expected: <200> but was: <{}>.",result.getEffectiveURI(),result.statusCode);
+        } else {
+            assertEquals((String)result.getEffectiveURI(), result.statusCode, 200)
+            assertThat((String)result.getEffectiveURI(), result.statusCode, is(200))
+        }

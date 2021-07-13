@@ -1,0 +1,8 @@
+/lib
+/deploy.bat
+/tmp
+/*.data
+testdrive
+/.grinder
+/grinder_logs
+**/generated/
