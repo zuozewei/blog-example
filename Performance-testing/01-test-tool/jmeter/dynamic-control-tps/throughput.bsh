@@ -1,0 +1,12 @@
+import org.apache.jmeter.util.JMeterUtils;
+
+getprop(p){ // get a JMeter property
+    return JMeterUtils.getPropDefault(p,"");
+}
+
+setprop(p,v){ // set a JMeter property
+    print("Setting property '"+p+"' to '"+v+"'.");
+    JMeterUtils.getJMeterProperties().setProperty(p, v);
+}
+
+setprop("throughput", args[0]);
