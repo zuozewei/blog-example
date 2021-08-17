@@ -1,0 +1,6 @@
+server:
+  port: 8082
+  context-path: /springboot
+person:
+  name: 小雷
+  age: 22

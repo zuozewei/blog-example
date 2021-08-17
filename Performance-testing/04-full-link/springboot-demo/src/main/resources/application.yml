@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: a
+  datasource:
+      data-source: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://172.16.106.251:3306/zuozewei?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true
+      username: root
+      password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
