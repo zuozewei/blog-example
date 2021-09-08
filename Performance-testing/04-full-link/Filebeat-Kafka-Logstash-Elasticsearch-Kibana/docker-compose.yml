@@ -1,0 +1,94 @@
+version: '3'
+services:
+  elasticsearch:
+    image: elasticsearch:7.6.2
+    container_name: elasticsearch
+    user: root
+    environment:
+      - "cluster.name=elasticsearch" #设置集群名称为elasticsearch
+      - "discovery.type=single-node" #以单一节点模式启动
+    volumes:
+      - /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins #插件文件挂载
+      - /mydata/elasticsearch/data:/usr/share/elasticsearch/data #数据文件挂载
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elastic
+
+  logstash:
+    image: logstash:7.6.2
+    container_name: logstash
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /mydata/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf #挂载logstash的配置文件
+    depends_on:
+      - elasticsearch #kibana在elasticsearch启动之后再启动
+    links:
+      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
+    ports:
+      - 5044:5044
+    networks:
+      - elastic
+
+  kibana:
+    image: kibana:7.6.2
+    container_name: kibana
+    links:
+      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
+    depends_on:
+      - elasticsearch #kibana在elasticsearch启动之后再启动
+    environment:
+      - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo
+    ports:
+      - 5601:5601
+    networks:
+      - elastic
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /mydata/zookeeper/data:/data
+      - /mydata/zookeeper/log:/datalog
+      - /usr/share/zoneinfo:/usr/share/zoneinfo
+    networks:
+      - elastic
+    ports:
+      - "2181:2181"
+
+  kafka:
+    container_name: kafka
+    image: wurstmeister/kafka
+    depends_on:
+      - zookeeper
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mydata/kafka:/kafka
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo
+    links:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    networks:
+      - elastic
+    environment:
+      - KAFKA_LISTENERS=INTERNAL://kafka:9092, OUT://kafka:29092
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka:9092, OUT://kafka:29092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,OUT:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=OUT
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_MESSAGE_MAX_BYTES=2000000
+      - KAFKA_CREATE_TOPICS=logs:1:1
+
+networks:
+  elastic:
+
+
