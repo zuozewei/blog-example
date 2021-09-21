@@ -1,0 +1,35 @@
+
+## 应用名称
+#spring.application.name=a-service
+## 应用服务 WEB 访问端口
+#server.port=8080
+## Nacos帮助文档: https://nacos.io/zh-cn/docs/concepts.html
+## Nacos认证信息
+#spring.cloud.nacos.discovery.username=nacos
+#spring.cloud.nacos.discovery.password=nacos
+## Nacos 服务发现与注册配置，其中子属性 server-addr 指定 Nacos 服务器主机和端口
+#spring.cloud.nacos.discovery.server-addr=mse-6d50f4f0-p.nacos-ans.mse.aliyuncs.com:8848
+## 注册到 nacos 的指定 namespace，默认为 public
+#spring.cloud.nacos.discovery.namespace=public
+server:
+  port: 7000
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+  application:
+    name: a-service
+  sleuth:
+    sampler: #采样器
+      probability: 1.0 #采样率，采样率是采集Trace的比率，默认0.1
+      rate: 10000 #每秒数据采集量，最多n条/秒Trace
+    web: #Spring Cloud Sleuth 针对 Web 组件的配置项，例如说 SpringMVC
+      enabled: true
+  zipkin: #设置zipkin服务端地址
+    base-url: http://127.0.0.1:9411
+logging:
+  level:
+    root: debug #为演示需要，开启debug级别日志

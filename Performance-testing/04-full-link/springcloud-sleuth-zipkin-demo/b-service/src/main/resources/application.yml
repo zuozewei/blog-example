@@ -1,0 +1,22 @@
+server:
+  port: 8000
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+  application:
+    name: b-service
+  sleuth:
+    sampler: #采样器
+      probability: 1.0 #采样率，采样率是采集Trace的比率，默认0.1
+      rate: 10000 #每秒数据采集量，最多n条/秒Trace
+    web: #Spring Cloud Sleuth 针对 Web 组件的配置项，例如说 SpringMVC
+      enabled: true
+  zipkin: #设置zipkin服务端地址
+    base-url: http://127.0.0.1:9411
+logging:
+  level:
+    root: debug
