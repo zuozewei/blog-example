@@ -1,0 +1,37 @@
+connect target /
+run{
+allocate channel d1 device type disk;
+delete noprompt obsolete recovery window of 7 days;
+release channel d1;
+
+allocate channel d1 device type disk;
+set limit channel d1 readrate = 10240;
+set limit channel d1 kbytes = 4096000;
+backup as compressed backupset
+incremental level=1
+format ='D:\rmanbackup\oracle11g\data\inc1_%T_%U.bak'
+tag = 'inc1'
+channel =d1
+database;
+release channel d1;
+
+allocate channel d1 device type disk;
+sql "alter system archive log current";
+set limit channel d1 readrate = 10240;
+set limit channel d1 kbytes = 4096000;
+backup as compressed backupset
+format='D:\rmanbackup\oracle11g\data\arch_%T_%U.bak'
+tag='arch'
+channel=d1
+archivelog all delete all input;
+release channel d1;
+
+allocate channel d1 device type disk;
+backup as compressed backupset
+format='D:\rmanbackup\oracle11g\data\ctl_%T_%U.bak'
+tag='ctlbak'
+channel=d1
+current controlfile reuse;
+release channel d1;}
+exit;
+!

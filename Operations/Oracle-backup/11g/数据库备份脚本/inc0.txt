@@ -1,0 +1,54 @@
+connect target /
+run{
+allocate channel d1 device type disk;
+allocate channel d2 device type disk;
+allocate channel d3 device type disk;
+allocate channel d4 device type disk;
+delete noprompt obsolete recovery window of 7 days;
+release channel d1;
+release channel d2;
+release channel d3;
+release channel d4;
+
+allocate channel d1 device type disk;
+allocate channel d2 device type disk;
+allocate channel d3 device type disk;
+allocate channel d4 device type disk;
+backup as compressed backupset
+incremental level=0
+format ='D:\rmanbackup\oracle11g\data\inc0_%T_%U.bak'
+tag = 'inc0'
+database;
+release channel d1;
+release channel d2;
+release channel d3;
+release channel d4;
+
+allocate channel d1 device type disk;
+allocate channel d2 device type disk;
+allocate channel d3 device type disk;
+allocate channel d4 device type disk;
+sql "alter system archive log current";
+backup as compressed backupset
+format='D:\rmanbackup\oracle11g\data\arch_%T_%U.bak'
+tag='arch'
+archivelog all delete all input;
+release channel d1;
+release channel d2;
+release channel d3;
+release channel d4;
+
+allocate channel d1 device type disk;
+allocate channel d2 device type disk;
+allocate channel d3 device type disk;
+allocate channel d4 device type disk;
+backup as compressed backupset
+format='D:\rmanbackup\oracle11g\data\ctl_%T_%U.bak'
+tag='ctlbak'
+current controlfile reuse;
+release channel d1;
+release channel d2;
+release channel d3;
+release channel d4;}
+exit;
+!

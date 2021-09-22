@@ -1,0 +1,111 @@
+Microsoft Windows [版本 6.1.7601]
+版权所有 (c) 2009 Microsoft Corporation。保留所有权利。
+
+C:\Users\wangqin>D:
+
+D:\Users\wangqin>cd D:\oracle\product\10.2.0\db_1\bin
+
+D:\oracle\product\10.2.0\db_1\bin>sqlplus /nolog
+
+SQL*Plus: Release 10.2.0.3.0 - Production on 星期二 12月 6 13:56:21 2016
+
+Copyright (c) 1982, 2006, Oracle.  All Rights Reserved.
+
+SQL> conn /as sysdba
+已连接。
+SQL> archive log list
+数据库日志模式             非存档模式
+自动存档             禁用
+存档终点            USE_DB_RECOVERY_FILE_DEST
+最早的联机日志序列     1937
+当前日志序列           1939
+SQL> shutdown immediate;
+数据库已经关闭。
+已经卸载数据库。
+ORACLE 例程已经关闭。
+SQL> starup mount;
+SP2-0734: 未知的命令开头 "starup mou..." - 忽略了剩余的行。
+SQL> startup mount;
+ORACLE 例程已经启动。
+
+Total System Global Area 1258291200 bytes
+Fixed Size                  1292156 bytes
+Variable Size             704645252 bytes
+Database Buffers          545259520 bytes
+Redo Buffers                7094272 bytes
+数据库装载完毕。
+SQL> alter database archivelog;
+
+数据库已更改。
+
+SQL> alter database open;
+
+数据库已更改。
+
+SQL> archive log list;
+数据库日志模式            存档模式
+自动存档             启用
+存档终点            USE_DB_RECOVERY_FILE_DEST
+最早的联机日志序列     1937
+下一个存档日志序列   1939
+当前日志序列           1939
+SQL> host rman
+
+恢复管理器: Release 10.2.0.3.0 - Production on 星期二 12月 6 14:00:45 2016
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+RMAN> connect target
+
+连接到目标数据库: ORCL (DBID=1435562535)
+
+RMAN> show all;
+
+使用目标数据库控制文件替代恢复目录
+RMAN 配置参数为:
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1; # default
+CONFIGURE BACKUP OPTIMIZATION OFF; # default
+CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+CONFIGURE CONTROLFILE AUTOBACKUP OFF; # default
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '%F'; # default
+CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default
+CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE MAXSETSIZE TO UNLIMITED; # default
+CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default
+CONFIGURE SNAPSHOT CONTROLFILE NAME TO 'D:\ORACLE\PRODUCT\10.2.0\DB_1\DATABASE\S
+NCFORCL.ORA'; # default
+
+RMAN> report obsolete;
+
+RMAN 保留策略将应用于该命令
+将 RMAN 保留策略设置为冗余 1
+未找到已废弃的备份
+
+RMAN> show all;
+
+RMAN 配置参数为:
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1; # default
+CONFIGURE BACKUP OPTIMIZATION OFF; # default
+CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+CONFIGURE CONTROLFILE AUTOBACKUP OFF; # default
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '%F'; # default
+CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default
+CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE MAXSETSIZE TO UNLIMITED; # default
+CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default
+CONFIGURE SNAPSHOT CONTROLFILE NAME TO 'D:\ORACLE\PRODUCT\10.2.0\DB_1\DATABASE\S
+NCFORCL.ORA'; # default
+
+RMAN> configure retention policy to recovery window of 7 days;
+
+新的 RMAN 配置参数:
+CONFIGURE RETENTION POLICY TO RECOVERY WINDOW OF 7 DAYS;
+已成功存储新的 RMAN 配置参数
+
+RMAN>exit
