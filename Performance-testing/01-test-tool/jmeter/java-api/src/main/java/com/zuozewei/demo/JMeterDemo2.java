@@ -1,27 +1,15 @@
 package com.zuozewei.demo;
 
 import org.apache.jmeter.JMeter;
-import org.apache.jmeter.config.Arguments;
-import org.apache.jmeter.config.gui.ArgumentsPanel;
-import org.apache.jmeter.control.LoopController;
-import org.apache.jmeter.control.gui.LoopControlPanel;
-import org.apache.jmeter.control.gui.TestPlanGui;
 import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui;
-import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.reporters.Summariser;
 import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.services.FileServer;
-import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.testelement.TestPlan;
-import org.apache.jmeter.threads.ThreadGroup;
-import org.apache.jmeter.threads.gui.ThreadGroupGui;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * 上传现成脚本demo
@@ -33,10 +21,10 @@ public class JMeterDemo2 {
 
     public static void main(String[] argv) throws Exception {
     	// 设置jmeterHome路径
-		String jmeterHome1 = "/Users/apple/Downloads/performance/apache-jmeter-4.0";
+		String jmeterHome1 = "E:\\jmeter\\apache-jmeter-5.4.1";
         //File jmeterHome = new File(System.getProperty("jmeter.home"));
 		File jmeterHome = new File(jmeterHome1);
-		File jmxFile = new File(jmeterHome1 + "/example.jmx");
+		File jmxFile = new File("E:\\jmeter\\JMeterJMX\\demo\\BaiduDemo.jmx");
 
 		// 分隔符
         String slash = System.getProperty("file.separator");
@@ -53,7 +41,7 @@ public class JMeterDemo2 {
                 JMeterUtils.setJMeterHome(jmeterHome.getPath());
                 JMeterUtils.loadJMeterProperties(jmeterProperties.getPath());
                 // 可以注释这一行，查看额外的日志，例如DEBUG级别
-                JMeterUtils.initLogging();
+//                JMeterUtils.initLogging();
                 JMeterUtils.initLocale();
 
 
@@ -70,7 +58,7 @@ public class JMeterDemo2 {
 				testPlanTree = SaveService.loadTree(jmxFile);
 
 				// 这个是递归实现的，比较复杂
-				JMeter.convertSubTree(testPlanTree);
+                JMeter.convertSubTree(testPlanTree, false);
 
 
 				// 在stdout中添加summary输出，得到测试进度，如:

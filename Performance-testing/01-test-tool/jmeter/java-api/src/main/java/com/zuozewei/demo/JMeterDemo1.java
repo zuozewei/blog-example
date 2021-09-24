@@ -5,7 +5,6 @@ import org.apache.jmeter.config.gui.ArgumentsPanel;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.control.gui.TestPlanGui;
-import org.apache.jmeter.engine.JMeterEngine;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
