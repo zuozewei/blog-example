@@ -30,7 +30,7 @@ public class JMeterDemo2 {
         // 分隔符
         String slash = System.getProperty("file.separator");
         String output = jmeterHome1 + slash + "test" + slash;
-        File jmxFile = new File(output + "/BaiduDemo.jmx");
+        File jmxFile = new File(output + "/example.jmx");
 
         // 判断jmeterHome
         if (jmeterHome.exists()) {
