@@ -4,7 +4,7 @@ apiVersion: v1
 metadata:
   name: redis
 spec:
-  storageClassName: managed-nfs-storage #---指定StorageClass
+  storageClassName: nfs-storage #---指定StorageClass
   resources:
     requests:
       storage: 5Gi         #设置 pvc 存储资源大小
