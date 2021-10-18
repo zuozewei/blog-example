@@ -1,0 +1,87 @@
+## Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-mysql-shadow
+  labels:
+    app: mysql-shadow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-shadow
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9104"
+      labels:
+        app: mysql-shadow
+    spec:     
+      containers:
+      - name: mysql-shadow
+        image: centos/mysql-57-centos7:latest
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD    ## 配置Root用户默认密码
+          value: "123456"
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 2000m
+            memory: 512Mi
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+        - name: config
+          mountPath: /etc/mysql/conf.d/my.cnf
+          subPath: my.cnf
+        - name: localtime
+          readOnly: true
+          mountPath: /etc/localtime
+      - name: mysql-exporter-shadow
+        image: prom/mysqld-exporter:latest
+        env:
+        - name: DATA_SOURCE_NAME
+          value: "root:123456@(db-mysql-produce:3306)/"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 9104
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: mysql-shadow
+      - name: config      
+        configMap:
+          name: mysql-shadow-config
+      - name: localtime
+        hostPath:
+          type: File
+          path: /etc/localtime
+---
+## Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-mysql-shadow
+  labels:
+    app: mysql-shadow
+spec:
+  type: NodePort
+  ports:
+  - name: mysql
+    port: 3306
+    targetPort: 3306
+    nodePort: 30338
+  - name: prom
+    port: 9104
+    targetPort: 9104
+  selector:
+    app: mysql-produce
+
