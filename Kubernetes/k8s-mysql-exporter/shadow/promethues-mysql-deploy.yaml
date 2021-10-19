@@ -83,5 +83,5 @@ spec:
     port: 9104
     targetPort: 9104
   selector:
-    app: mysql-produce
+    app: mysql-shadow
 
