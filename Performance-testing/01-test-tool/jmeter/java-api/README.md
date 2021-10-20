@@ -1,4 +1,4 @@
-# README #
+# 性能工具之JMeter两个Java API Demo #
 
 这个项目演示了通过Java API执行JMeter脚本
 
@@ -17,3 +17,6 @@
 * 进入 *target* 目录
 * 执行脚本命令 **java -Djmeter.home=YOUR_JMETER_LOCATION -jar jmeter-from-code-1.0-SNAPSHOT-jar-with-dependencies.jar**
 * 打开 *example.jmx* 在你的 "jmeter.home" 目录中示例脚本，*example.jtl* 是测试结果文件
+
+具体地址： 
+- [性能工具之JMeter两个Java API Demo（VIP）](https://mp.weixin.qq.com/s/0-EkmoZgeBZkdIEviDa6Xg)
