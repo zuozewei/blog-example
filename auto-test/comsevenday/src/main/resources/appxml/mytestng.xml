@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="automation" parallel="Automatically generate xml" thread-count="1">
+    <listeners>
+        <listener class-name="appout.reporter.ReporterListener"/>
+    </listeners>
+    <test name="127.0.0.1">
+        <parameter name="udid" value="127.0.0.1:62001"/>
+        <parameter name="port" value="4723"/>
+        <classes>
+            <class name="appout.appcase.CartTest"/>
+        </classes>
+    </test>
+</suite>

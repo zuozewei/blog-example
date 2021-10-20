@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="UI自动化" parallel="tests" thread-count="1">
+    <listeners>
+        <listener class-name="appout.reporter.ReporterListener"></listener>
+    </listeners>
+    <test name="M6TGLMA721108530">
+        <parameter name="udid" value="M6TGLMA721108530"/>
+        <parameter name="port" value="4723"/>
+        <classes>
+            <class name="appout.appcase.LoginTest"/>
+        </classes>
+    </test>
+</suite>
