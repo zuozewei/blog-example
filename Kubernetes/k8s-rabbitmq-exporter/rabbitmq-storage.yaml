@@ -1,0 +1,12 @@
+## PVC
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: rabbitmq
+spec:
+  storageClassName: nfs-storage  #指定StorageClass
+  resources:
+    requests:
+      storage: 5Gi #设置 pvc 存储资源大小
+  accessModes:
+    - ReadWriteOnce
