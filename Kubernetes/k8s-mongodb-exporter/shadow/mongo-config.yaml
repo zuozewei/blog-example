@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config-shadow
+  labels:
+    app: mongo-shadow
+data:
+  mongodb.conf: |-
+    dbpath=/data/middleware-data/mongodb 
+    logpath=/data/middleware-data/mongodb/mongodb.log
+    pidfilepath=/data/middleware-data/mongodb/master.pid
+    directoryperdb=true
+    logappend=true
+    bind_ip=0.0.0.0
+    port=27017
