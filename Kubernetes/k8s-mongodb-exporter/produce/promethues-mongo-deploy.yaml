@@ -85,7 +85,7 @@ spec:
             [
               "--web.listen-address=:9104",
               "--mongodb.uri",
-              "mongodb://db-mongo:27017",
+              "mongodb://db-mongo-produce:27017",
             ]
           resources:
             requests:
