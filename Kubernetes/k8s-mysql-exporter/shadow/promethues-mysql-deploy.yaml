@@ -46,7 +46,7 @@ spec:
         image: prom/mysqld-exporter:latest
         env:
         - name: DATA_SOURCE_NAME
-          value: "root:123456@(db-mysql-produce:3306)/"
+          value: "root:123456@(db-mysql-shadow:3306)/"
         resources:
           requests:
             cpu: 100m
