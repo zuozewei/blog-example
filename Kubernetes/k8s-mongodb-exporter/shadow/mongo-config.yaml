@@ -12,4 +12,4 @@ data:
     directoryperdb=true
     logappend=true
     bind_ip=0.0.0.0
-    port=27017
+    port=27018

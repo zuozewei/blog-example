@@ -43,7 +43,7 @@ spec:
             - -c
             - "exec mongod -f /etc/mongod.conf"
           ports:
-            - containerPort: 27017
+            - containerPort: 27018
           resources:
             limits:
               cpu: 1000m
@@ -58,7 +58,7 @@ spec:
             successThreshold: 1
             failureThreshold: 3
             tcpSocket:
-              port: 27017
+              port: 27018
           readinessProbe:
             initialDelaySeconds: 10
             periodSeconds: 10
