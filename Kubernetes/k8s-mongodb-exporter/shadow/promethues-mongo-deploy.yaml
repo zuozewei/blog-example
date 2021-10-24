@@ -9,7 +9,7 @@ spec:
   type: NodePort
   ports:
     - name: mongo
-      port: 27017
+      port: 27018
       targetPort: 27018
       nodePort: 30018
   selector:
