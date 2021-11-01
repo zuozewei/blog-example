@@ -12,6 +12,9 @@ spec:
       port: 27018
       targetPort: 27018
       nodePort: 30018
+    - name: prom
+      port: 9104
+      targetPort: 9104
   selector:
     app: mongo-produce
 ---
