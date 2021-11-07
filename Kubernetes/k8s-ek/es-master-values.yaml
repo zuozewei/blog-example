@@ -22,11 +22,11 @@ esJavaOpts: "-Xmx1g -Xms1g"
 ## 部署资源配置(生成环境一定要设置大些)
 resources:
   requests:
-    cpu: "2000m"
-    memory: "2Gi"
+    cpu: "1000m"
+    memory: "1Gi"
   limits:
-    cpu: "2000m"
-    memory: "2Gi"
+    cpu: "1000m"
+    memory: "1Gi"
 ## 数据持久卷配置
 persistence:
   enabled: true
