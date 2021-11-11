@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.6">
+    <title>Jmeter启动</title>
+
+    <link rel="canonical" href="https://v4ing.bootcss.com/docs/4.3/examples/checkout/">
+
+    <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" rel="stylesheet">
+    <!-- Favicons -->
+    <meta name="theme-color" content="#563d7c">
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="https://v4.bootcss.com/docs/4.3/examples/checkout/form-validation.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <img src="https://jmeter.apache.org/images/logo.svg" class="d-block mx-auto mb-4" alt="Apache JMeter">
+        <p class="lead">The Apache JMeter™ application is open source software, a 100% pure Java application designed to
+            load test functional behavior and measure performance. It was originally designed for testing Web
+            Applications but has since expanded to other test functions.</p>
+    </div>
+    <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">上传脚本</h4>
+        <form>
+            <input id="jmeterId" type="file"/>
+            <a class="btn btn-lg btn-primary btn-block" value="上传脚本" onclick="submitupload()">上传脚本</a>
+        </form>
+        <form>
+            <input id="jmeterParam" type="file"/>
+            <a class="btn btn-lg btn-primary btn-block" value="上传参数" onclick="submitParm()">上传参数文件</a>
+        </form>
+        <h4 class="mb-3">运行</h4>
+        <!--        jmeter -n -t [jmx file] -l [results file] -e -o [Path to web report folder]-->
+        <form class="needs-validation" novalidate>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="jmeterName">压测脚本</label>
+                    <input type="text" class="form-control" id="jmeterName" name="jmeterName" placeholder="jmx file"
+                           value="" required>
+                    <div class="invalid-feedback">
+                        jmx file
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="numberName">并发数</label>
+                    <input type="text" class="form-control" id="numberName" name="num" placeholder="并发数" value=""
+                           required>
+                    <div class="invalid-feedback">
+                        并发数
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="duration">执行时间</label>
+                    <input type="text" class="form-control" id="duration" name="duration" placeholder="执行时间" value=""
+                           required>
+                    <div class="invalid-feedback">
+                        并发数
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <a class="btn btn-success" onclick="JmeterRun()" type="submit">运行</a>
+            <a class="btn btn-danger" onclick="Jmeterstop()" type="submit">停止</a>
+            <a class="btn btn-info" onclick="JmeterInfo()" data-toggle="modal" data-target="#myModal">查看信息</a>
+        </form>
+    </div>
+</div>
+
+<!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+<!--    Launch demo modal-->
+<!--</button>-->
+
+<!-- 日志模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Jmeter运行日志</h4>
+            </div>
+            <div class="modal-body">
+               <textarea rows="30" cols="20" id="JmeterMsg"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2017-2019 Company Name</p>
+    <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy</a></li>
+        <li class="list-inline-item"><a href="#">Terms</a></li>
+        <li class="list-inline-item"><a href="#">Support</a></li>
+    </ul>
+</footer>
+</div>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script th:src="@{/asserts/js/layer/layer.js}"></script>
+<script>window.jQuery || document.write('<script src="/docs/4.3.1/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="/docs/4.3/dist/js/bootstrap.bundle.js"
+        th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.bundle.js}"></script>
+<script src="https://v4.bootcss.com/docs/4.3/examples/checkout/form-validation.js"></script>
+</body>
+<script>
+    //上传脚本
+    function submitupload() {
+        var type = "file";              //后台接收时需要的参数名称，自定义即可
+        var id = "jmeterId";            //即input的id，用来寻找值
+        var formData = new FormData();
+        var jmeterId = $("#jmeterId").val();
+        if (jmeterId == "") {
+            layer.msg("Jmeter文件不能为空，请输入", {time: 2000, icon: 5, shift: 6}, function () {
+            });
+            return;
+        }
+        formData.append(type, $("#" + id)[0].files[0]);
+        $.ajax({
+            type: "POST",
+            url: '/jmeter/upload',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.code == 100) {
+                    layer.msg("用户信息保存成功", {time: 1000, icon: 6}, function () {
+                        // console.log("相应结果:" + data.extend.file);
+                        //通过返回结果进行赋值
+                        $("#jmeterName").val(data.extend.file);
+                        // window.location.href = "/jmeterIndex";
+                    });
+                } else {
+                    layer.msg("信息保存失败，请重新操作" + data.err, {time: 2000, icon: 5, shift: 6}, function () {
+
+                    });
+                }
+            }
+        });
+    }
+
+    //上传参数
+    function submitParm() {
+        var type = "file";              //后台接收时需要的参数名称，自定义即可
+        var id = "jmeterParam";            //即input的id，用来寻找值
+        var formData = new FormData();
+        var jmeterPara = $("#jmeterParam").val();
+        if (jmeterPara == "") {
+            layer.msg("Jmeter文件不能为空，请输入", {time: 2000, icon: 5, shift: 6}, function () {
+            });
+            return;
+        }
+        formData.append(type, $("#" + id)[0].files[0]);
+        $.ajax({
+            type: "POST",
+            url: '/jmeter/Paramupload',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.code == 100) {
+                    layer.msg("参数文件保存成功", {time: 1000, icon: 6}, function () {
+                    });
+                } else {
+                    layer.msg("信息保存失败，请重新操作" + data.err, {time: 2000, icon: 5, shift: 6}, function () {
+
+                    });
+                }
+            }
+        });
+    }
+
+    //运行
+    function JmeterRun() {
+        let JmeterName = $("#jmeterName").val();
+        let number = $("#numberName").val();
+        let duration = $("#duration").val();
+
+        console.log(JmeterName);
+        console.log(number);
+        $.ajax({
+            type: "POST",
+            url: '/jmeter/JmeterRun',
+            data: {
+                "jmeterName": JmeterName,
+                "numberName": number,
+                "duration": duration
+            },
+            success: function (result) {
+                if (result.code == 100) {
+                    layer.msg("启动成功成功", {time: 1000, icon: 6}, function () {
+                    });
+                } else {
+                    layer.msg("启动失败，请重新操作", {time: 2000, icon: 5, shift: 6}, function () {
+
+                    });
+                }
+            }
+        })
+    }
+
+    //停止
+    function Jmeterstop() {
+        $.ajax({
+            type: "Get",
+            url: '/jmeter/JmeterStop',
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (result.code==100) {
+                    layer.msg("停止成功", {time: 1000, icon: 6}, function () {
+                    });
+                } else {
+                    layer.msg("停止失败，请重新操作", {time: 2000, icon: 5, shift: 6}, function () {
+
+                    });
+                }
+            }
+        })
+
+    }
+
+    //查看日志
+    function JmeterInfo() {
+        $.ajax({
+            type: "Get",
+            url: '/jmeter/Jmeterinfo',
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (result.code == 100) {
+                    layer.msg("启动成功成功", {time: 1000, icon: 6}, function () {
+                        $("#JmeterMsg").val(data.extend.infopage);
+                    });
+                } else {
+                    layer.msg("启动失败，请重新操作", {time: 2000, icon: 5, shift: 6}, function () {
+
+                    });
+                }
+            }
+        })
+    }
+
+
+</script>
+</html>
