@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sevendays.mapper.ItemTableMapper" >
+  <resultMap id="BaseResultMap" type="com.sevendays.pojo.ItemTable" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="Project_description" property="projectDescription" jdbcType="VARCHAR" />
+    <result column="project_start_time" property="projectStartTime" jdbcType="TIME" />
+    <result column="department _id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="test_name" property="testName" jdbcType="VARCHAR" />
+    <result column="dev_name" property="devName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, project_name, Project_description, project_start_time, "department _id", remarks, 
+    test_name, dev_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sevendays.pojo.ItemTableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from item_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from item_table
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from item_table
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sevendays.pojo.ItemTableExample" >
+    delete from item_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sevendays.pojo.ItemTable" >
+    insert into item_table (id, project_name, Project_description, 
+      project_start_time, "department _id", remarks, 
+      test_name, dev_name)
+    values (#{id,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{projectDescription,jdbcType=VARCHAR}, 
+      #{projectStartTime,jdbcType=TIME}, #{departmentId,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{testName,jdbcType=VARCHAR}, #{devName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sevendays.pojo.ItemTable" >
+    insert into item_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectDescription != null" >
+        Project_description,
+      </if>
+      <if test="projectStartTime != null" >
+        project_start_time,
+      </if>
+      <if test="departmentId != null" >
+        "department _id",
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="testName != null" >
+        test_name,
+      </if>
+      <if test="devName != null" >
+        dev_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDescription != null" >
+        #{projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStartTime != null" >
+        #{projectStartTime,jdbcType=TIME},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="testName != null" >
+        #{testName,jdbcType=VARCHAR},
+      </if>
+      <if test="devName != null" >
+        #{devName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sevendays.pojo.ItemTableExample" resultType="java.lang.Integer" >
+    select count(*) from item_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update item_table
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectName != null" >
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectDescription != null" >
+        Project_description = #{record.projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectStartTime != null" >
+        project_start_time = #{record.projectStartTime,jdbcType=TIME},
+      </if>
+      <if test="record.departmentId != null" >
+        "department _id" = #{record.departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testName != null" >
+        test_name = #{record.testName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.devName != null" >
+        dev_name = #{record.devName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update item_table
+    set id = #{record.id,jdbcType=INTEGER},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      Project_description = #{record.projectDescription,jdbcType=VARCHAR},
+      project_start_time = #{record.projectStartTime,jdbcType=TIME},
+      "department _id" = #{record.departmentId,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      test_name = #{record.testName,jdbcType=VARCHAR},
+      dev_name = #{record.devName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sevendays.pojo.ItemTable" >
+    update item_table
+    <set >
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDescription != null" >
+        Project_description = #{projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStartTime != null" >
+        project_start_time = #{projectStartTime,jdbcType=TIME},
+      </if>
+      <if test="departmentId != null" >
+        "department _id" = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="testName != null" >
+        test_name = #{testName,jdbcType=VARCHAR},
+      </if>
+      <if test="devName != null" >
+        dev_name = #{devName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sevendays.pojo.ItemTable" >
+    update item_table
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      Project_description = #{projectDescription,jdbcType=VARCHAR},
+      project_start_time = #{projectStartTime,jdbcType=TIME},
+      "department _id" = #{departmentId,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      test_name = #{testName,jdbcType=VARCHAR},
+      dev_name = #{devName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
