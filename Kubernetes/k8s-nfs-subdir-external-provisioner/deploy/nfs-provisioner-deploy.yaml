@@ -28,11 +28,11 @@ spec:
             - name: PROVISIONER_NAME     ## Provisioner的名称,以后设置的storageclass要和这个保持一致
               value: nfs-client
             - name: NFS_SERVER           ## NFS服务器地址,需和valumes参数中配置的保持一致
-              value: 172.16.106.205
+              value: 172.31.184.230
             - name: NFS_PATH             ## NFS服务器数据存储目录,需和valumes参数中配置的保持一致
               value: /nfs/data
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 172.16.106.205     ## NFS服务器地址
+            server: 172.31.184.230     ## NFS服务器地址
             path: /nfs/data            ## NFS服务器数据存储目录
