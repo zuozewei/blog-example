@@ -17,7 +17,7 @@ spec:
     - name: rabbitmq-management
       port: 15672
       targetPort: 15672
-      nodePort: 30340
+      nodePort: 30348
     - name: prom
       port: 9419
       targetPort: 9419
@@ -47,7 +47,7 @@ spec:
           image: rabbitmq:3.7.15-management
           ports:
             - containerPort: 5672
-            - containerPort: 15672
+#            - containerPort: 15672
           resources:
             limits:
               cpu: 500m
