@@ -11,6 +11,5 @@ data:
     bind 0.0.0.0
     appendonly yes
     protected-mode no
-    requirepass 123456
     pidfile /data/redis-6379.pid
     maxmemory 1073741824
