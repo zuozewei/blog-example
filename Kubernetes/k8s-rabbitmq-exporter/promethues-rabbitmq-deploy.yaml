@@ -55,22 +55,22 @@ spec:
             requests:
               cpu: 500m
               memory: 512Mi
-          livenessProbe:
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-            tcpSocket:
-              port: 5672
-          readinessProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-            tcpSocket:
-              port: 5672
+#          livenessProbe:
+#            initialDelaySeconds: 30
+#            periodSeconds: 10
+#            timeoutSeconds: 5
+#            successThreshold: 1
+#            failureThreshold: 3
+#            tcpSocket:
+#              port: 5672
+#          readinessProbe:
+#            initialDelaySeconds: 10
+#            periodSeconds: 10
+#            timeoutSeconds: 5
+#            successThreshold: 1
+#            failureThreshold: 3
+#            tcpSocket:
+#              port: 5672
           volumeMounts:
             - name: data
               mountPath: /var/lib/rabbitmq/
