@@ -3,17 +3,17 @@ kind: ConfigMap
 metadata:
   name: nacos-config
 data:
-  SERVICE_NAME: "nacos-headless"
-  DOMAIN_NAME: "cluster.local"
+  SERVICE_NAME: "nacos-headless" # K8S 中的 Service 名称
+  DOMAIN_NAME: "cluster.local"   # 指定 k8s domain 配置，一般默认即可
   NACOS_REPLICAS: "3"
-  PREFER_HOST_MODE: "hostname"
+  PREFER_HOST_MODE: "hostname"   # 配置 Nacos 集群节点间服务发现使用的模式，支持 hostname、ip 两种模式
   NACOS_APPLICATION_PORT: "8848"
   NACOS_SERVER_PORT: "8848"
-  JVM_XMX: "2g"
-  JVM_XMS: "2g"
-  JVM_XMN: "1g"
-  MYSQL_SERVICE_HOST: "db-mysql-produce"
-  MYSQL_SERVICE_DB_NAME: "nacos_config_cluster"
-  MYSQL_SERVICE_PORT: "3306"
-  MYSQL_SERVICE_USER: "reader"
-  MYSQL_SERVICE_PASSWORD: "123456"
+  JVM_XMX: "2g" # 最大堆内存大小
+  JVM_XMS: "2g" # 最初是堆内存大小
+  JVM_XMN: "1g" # 堆内新生代的内存大小
+  MYSQL_SERVICE_HOST: "db-mysql-produce"  # 数据库地址（这里使用上面部署的 Mysql，由于部署在 K8S 里面，所以使用 Mysql Service 提供的 K8S 内部地址）
+  MYSQL_SERVICE_DB_NAME: "nacos_config_cluster" # 指定使用的库名称
+  MYSQL_SERVICE_PORT: "3306" # 数据库端口
+  MYSQL_SERVICE_USER: "reader" # 数据库用户名
+  MYSQL_SERVICE_PASSWORD: "123456" # 数据库密码
