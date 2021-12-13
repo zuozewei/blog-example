@@ -1,0 +1,48 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: zipkin-dependencies
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          containers:
+            - name: zipkin
+              image: openzipkin/zipkin-dependencies:2.6
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: JAVA_OPTS
+                  value: "-Xms512m -Xmx512m -Duser.timezone=Asia/Shanghai"
+                - name: STORAGE_TYPE
+                  value: elasticsearch
+                - name: ES_HOSTS
+                  value: elasticsearch-client:9200
+                - name: ES_INDEX
+                  value: zipkin
+                - name: ES_INDEX_REPLICAS
+                  value: "1"
+                - name: ES_INDEX_SHARDS
+                  value: "3"
+                - name: ES_USERNAME
+                  value: elastic
+                - name: ES_PASSWORD
+                  value: admin@123
+                - name: KAFKA_BOOTSTRAP_SERVERS
+                  value: kafka:9092
+                - name: KAFKA_TOPIC
+                  value: zipkin
+                - name: KAFKA_GROUP_ID
+                  value: zipkin
+                - name: KAFKA_STREAMS
+                  value: "1"
+              resources:
+                limits:
+                  cpu: 1000m
+                  memory: 512Mi
+                requests:
+                  cpu: 500m
+                  memory: 256Mi
+          restartPolicy: OnFailure
