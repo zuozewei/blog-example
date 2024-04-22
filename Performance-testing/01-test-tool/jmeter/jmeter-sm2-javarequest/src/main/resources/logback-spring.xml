@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出 -->
+<!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true -->
+<!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
+<!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
+<configuration scan="true" scanPeriod="60 seconds">
+    <contextName>logback</contextName>
+    <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量 -->
+    <property name="log.path" value="./log"/>
+    <!--输出到控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter"></filter>-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level logger_name:%logger{36} - %msg %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- 时间滚动输出 level为 INFO 日志 -->
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 正在记录的日志文件的路径及文件名 -->
+        <file>${log.path}/vpp-data-jibei.log</file>
+        <!--日志文件输出格式 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level logger_name:%logger{36} - %msg %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <!--如果第二天输出日志,会将当天的日志记录在<file>${log.path}/log_debug.log</file>,然后将昨天的日志归档到下面的文件中 -->
+            <!--以分钟切分 %d{yyyy-MM-dd_HH-mm} -->
+            <fileNamePattern>${log.path}/vpp-data-jibei-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+            <!--单个日志文件最大100M，到了这个值，就会再创建一个日志文件，日志文件的名字最后+1 -->
+            <maxFileSize>20MB</maxFileSize>
+            <!--日志文件保留天数 -->
+            <maxHistory>15</maxHistory>
+            <!--所有的日志文件最大20G，超过就会删除旧的日志 -->
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <!--root配置必须在appender下边 -->
+    <!--root节点是对所有appender的管理,添加哪个appender就会打印哪个appender的日志 -->
+    <!--root节点的level是总的日志级别控制,如果appender的日志级别设定比root的高,会按照appender的日志级别打印日志, -->
+    <!--如果appender的日志级别比root的低,会按照root设定的日志级别进行打印日志 -->
+    <!--也就是说root设定的日志级别是最低限制,如果root设定级别为最高ERROR,那么所有appender只能打印最高级别的日志 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO_FILE"/>
+    </root>
+    <logger name="org.bouncycastle" level="error" additivity="false">
+        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.alibaba.fastjson" level="error" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO_FILE"/>
+    </logger>
+    <logger name="com.sm.sdk.encry" level="error" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO_FILE"/>
+    </logger>
+    <logger name="org.springframework" level="error" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO_FILE"/>
+    </logger>
+</configuration>
