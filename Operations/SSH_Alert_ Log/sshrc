@@ -1,0 +1,12 @@
+#!/bin/bash
+#获取登录者的用户名
+user=$USER
+#获取登录者的IP地址
+ip=${SSH_CLIENT%% *}
+#获取登录的时间（精确到秒）
+time=$(date +%F" "%H:%M:%S)
+#服务器的IP地址
+hostname=$(hostname)
+echo "您的机器:$hostname，于:$time，被IP:$ip以账号$user进行登录,请确认是否为公司员工。" > log
+
+python3 /etc/ssh/testEmail.py   "$time" "$user" "$ip" "$hostname"
