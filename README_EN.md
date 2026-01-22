@@ -293,15 +293,19 @@ Depending on the specific example's technology stack, you may need the following
 ## ❓ FAQ
 
 **Q: Can the code be used directly in production environments?**
+
 A: Some configurations (like K8s deployment scripts) can be used directly, but adjustments based on your actual environment are recommended.
 
 **Q: What background knowledge is needed to learn this code?**
+
 A: Different areas have different requirements. The Java testing section needs Java basics, K8s deployment requires understanding container concepts, and the AI/LLM section suggests reading blog posts first to understand the background.
 
 **Q: Will the code be continuously updated?**
+
 A: New examples will be added continuously with the publication of blog posts, and discovered issues will be fixed.
 
 **Q: How do I report issues or ask questions?**
+
 A: You can submit an Issue on GitHub, or communicate through blog comments.
 
 
