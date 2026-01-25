@@ -19,6 +19,7 @@
 - **OpenAI API 集成** - 首次调用、多轮对话、流式输出
 - **Agent 实现** - 从头实现 Agent、使用 LangChain 框架实现 ReAct Agent
 - **会议转录系统** - 基于 Whisper 和 DeepSeek 的会议转录与摘要生成
+- **AI应用记忆管理完整指南** - 基于 mem0 框架的长期记忆系统，支持多用户隔离、向量存储和个性化 AI 回复
 
 ### ☕ Java API 测试 (Java-api-test)
 - **数据驱动测试** - TestNG 数据驱动、文本数据驱动、配置文件读取
@@ -140,7 +141,8 @@ blog-example/
 │   ├── OpenAI API/                  # OpenAI API 集成
 │   ├── 从头实现一个Agent/           # Agent 实现
 │   ├── 使用LangChain框架实现ReAct Agent/
-│   └── tx-meeting-transcribe/       # 会议转录系统
+│   ├── tx-meeting-transcribe/       # 会议转录系统
+│   └── AI应用记忆管理完整指南/       # AI 应用记忆管理完整指南
 ├── Java-api-test/                   # Java API 测试
 │   ├── 00-testdata/                # 测试数据处理
 │   │   ├── springboot-fastjson-demo/  # FastJson 示例
@@ -332,6 +334,7 @@ A: 可以在 GitHub 提 Issue，或者通过博客留言交流。
 
 - ✨ LangChain 框架完整实践（零基础入门、角色扮演机器人、聊天历史管理、格式化响应）
 - 🤖 ReAct Agent 双实现（从头实现 + LangChain 框架）
+- 🧠 AI 应用记忆管理完整指南（基于 mem0 框架的长期记忆系统，支持多用户隔离、向量存储和个性化 AI 回复）
 - 🔒 依赖更新：升级 fastjson 版本
 
 </details>

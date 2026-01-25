@@ -19,6 +19,7 @@ The code here has been used in actual projects, not toy examples. Each directory
 - **OpenAI API Integration** - First call, multi-turn dialogue, streaming output
 - **Agent Implementation** - Implementing Agent from scratch, implementing ReAct Agent using LangChain framework
 - **Meeting Transcription System** - Meeting transcription and summary generation based on Whisper and DeepSeek
+- **AI Application Memory Management Complete Guide** - Long-term memory system based on mem0 framework, supporting multi-user isolation, vector storage, and personalized AI responses
 
 ### ☕ Java API Testing (Java-api-test)
 - **Data-Driven Testing** - TestNG data-driven, text data-driven, configuration file reading
@@ -140,7 +141,8 @@ blog-example/
 │   ├── OpenAI API/                  # OpenAI API Integration
 │   ├── 从头实现一个Agent/           # Agent Implementation
 │   ├── 使用LangChain框架实现ReAct Agent/
-│   └── tx-meeting-transcribe/       # Meeting Transcription System
+│   ├── tx-meeting-transcribe/       # Meeting Transcription System
+│   └── AI应用记忆管理完整指南/       # AI Application Memory Management Complete Guide
 ├── Java-api-test/                   # Java API Testing
 │   ├── 00-testdata/                # Test Data Processing
 │   │   ├── springboot-fastjson-demo/  # FastJson Examples
@@ -332,6 +334,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - ✨ Complete LangChain Framework Practice (Zero-Basic Introduction, Role-Playing Bots, Chat History Management, Formatted Responses)
 - 🤖 ReAct Agent Dual Implementation (From Scratch + LangChain Framework)
+- 🧠 AI Application Memory Management Complete Guide (Long-term memory system based on mem0 framework, supporting multi-user isolation, vector storage, and personalized AI responses)
 - 🔒 Dependency Update: Upgraded fastjson version
 
 </details>
