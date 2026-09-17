@@ -183,6 +183,70 @@ class DeviceAuthTest {
                 "轮换后新 keyId 的令牌必须放行");
     }
 
+    // ---------- 防重放有效期边界（nonce 占位覆盖最晚可接受时刻） ----------
+
+    @Test
+    void 设备时间超前的消息通过且重放被拒() {
+        // 设备时钟超前窗口上限（5 分钟）：|now - timestamp| = windowMs，仍在合法边界内
+        long futureTs = NOW + WINDOW_MS;
+        AuthMessage msg = buildMessage("dev-001", "k1", futureTs, PAYLOAD);
+        String token = tokenService.sign(msg, "secret-of-dev-001");
+        assertTrue(authFilter.authenticate(msg, token, NOW),
+                "设备时间超前至窗口上限边界仍属合法时漂，应放行");
+        assertFalse(authFilter.authenticate(msg, token, NOW),
+                "同一消息立即重放必须被 nonce 查重拒绝");
+    }
+
+    @Test
+    void nonce临界过期时刻原消息重放仍被拒() {
+        // 设备时间超前 5 分钟截获并登记：expiry = 消息时间戳 + 窗口 = NOW + 10 分钟
+        long futureTs = NOW + WINDOW_MS;
+        AuthMessage msg = buildMessage("dev-001", "k1", futureTs, PAYLOAD);
+        String token = tokenService.sign(msg, "secret-of-dev-001");
+        assertTrue(authFilter.authenticate(msg, token, NOW), "首次出现必须放行");
+
+        // 攻击者在旧口径（首次接收时间 + 窗口 = NOW + 5 分钟）过期后重放：
+        // 消息时间戳超前仍满足 |NOW+6min - (NOW+5min)| = 1min ≤ 窗口，时间窗检查通过；
+        // nonce 有效期必须覆盖到消息最晚可接受时刻（NOW + 10 分钟），查重仍拦下
+        long replayAt = NOW + 6 * 60 * 1000L;
+        assertFalse(authFilter.authenticate(msg, token, replayAt),
+                "nonce 按消息时间戳计有效期，过期后原消息重放仍必须被拒绝");
+
+        // 越过最晚可接受时刻（NOW + 10 分钟）后，时间窗检查自身即拒绝，nonce 同步出窗
+        long outOfWindow = NOW + 11 * 60 * 1000L;
+        assertFalse(authFilter.authenticate(msg, token, outOfWindow),
+                "消息彻底出窗后时间窗检查即拒绝");
+    }
+
+    @Test
+    void 设备时间超前的并发重放只放行一次() throws Exception {
+        long futureTs = NOW + WINDOW_MS;
+        AuthMessage msg = buildMessage("dev-001", "k1", futureTs, PAYLOAD);
+        String token = tokenService.sign(msg, "secret-of-dev-001");
+        int threads = 16;
+        ExecutorService pool = Executors.newFixedThreadPool(threads);
+        CountDownLatch ready = new CountDownLatch(threads);
+        CountDownLatch fire = new CountDownLatch(1);
+        List<Future<Boolean>> futures = new ArrayList<>();
+        for (int i = 0; i < threads; i++) {
+            futures.add(pool.submit(() -> {
+                ready.countDown();
+                fire.await();
+                return authFilter.authenticate(msg, token, NOW);
+            }));
+        }
+        ready.await();
+        fire.countDown();
+        int passed = 0;
+        for (Future<Boolean> f : futures) {
+            if (f.get()) {
+                passed++;
+            }
+        }
+        pool.shutdown();
+        assertEquals(1, passed, "设备时间超前的并发重放必须有且仅有一个请求被放行");
+    }
+
     @Test
     void 密钥以密文形态落库() {
         // 仓库内不出现明文：任意 keyId 取出的都是解密后的可用密钥，

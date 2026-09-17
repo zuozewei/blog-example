@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -14,7 +15,8 @@ import java.util.function.Consumer;
  * 1. 先持久化后投递：send() 先落仓库再投递下行通道，生产形态以发件箱
  *    （本地消息表 + 异步投递）消除"数据库成功、消息发送失败"的窗口期；
  * 2. 响应判定只信遥测：ACK 只证明"设备收到并接受"，COMPLETED 只能由
- *    遥测在稳定窗口内连续达标驱动，响应时延 = 遥测达标时刻 - 发送时刻；
+ *    至少 2 个连续带内遥测点驱动（相邻点间隔不超过缺口上限，间隔以遥测
+ *    时间戳计），响应时延 = 遥测达标时刻 - 发送时刻；
  * 3. 回执确定性规则：重复回执幂等忽略；乱序回执快进补齐（ACK 丢失但
  *    设备已动作/已达标时以遥测与后续事件为准）；终态后迟到消息一律忽略，
  *    不得重新激活执行；
@@ -45,14 +47,19 @@ public class InstructionService {
 
     /**
      * 创建并下发：CREATED → SENT。
-     * 先持久化再投递下行通道；同 ID 指令在途时幂等拦截，不重复投递——
-     * 重复投递会导致设备重复动作。
+     * 先持久化再投递下行通道；同 ID 指令幂等拦截覆盖全部已登记状态——
+     * 在途重复下发不重复投递（重复投递会导致设备重复动作），
+     * 终态（COMPLETED/FAILED/CANCELLED）后同编号同样拒绝作为新指令执行：
+     * 设备侧以业务指令编号去重，终态后再收到同编号指令会触发设备重复动作。
+     * 确需重发的场景（核查确认未执行后人工重发）必须使用新编号并关联原编号，
+     * 由业务层显式建立"原指令 → 补发指令"的关系链，教学实现只做拒绝。
      */
     public void send(DispatchInstruction instruction) {
-        if (repository.find(instruction.getInstructionId())
-                .map(i -> !i.getState().isTerminal())
-                .orElse(false)) {
-            log.warn("指令 {} 已在途，重复下发被幂等拦截", instruction.getInstructionId());
+        if (repository.find(instruction.getInstructionId()).isPresent()) {
+            log.warn("指令 {} 已登记（当前 {}），重复/终态后下发被幂等拦截",
+                    instruction.getInstructionId(),
+                    repository.find(instruction.getInstructionId())
+                            .map(i -> i.getState().name()).orElse("UNKNOWN"));
             return;
         }
         repository.save(instruction);
@@ -115,18 +122,26 @@ public class InstructionService {
 
     /**
      * 遥测驱动 —— 响应成功与响应时延的唯一判据。
-     * 实测功率进入容差带记录 reachedAt，窗口内连续稳定达标转 COMPLETED；
-     * REVIEW 中遥测稳定达标同样转 COMPLETED（迟到遥测可终结核查）。
+     * 实测功率进入容差带记录 reachedAt，至少 2 个连续带内遥测点判定达标转
+     * COMPLETED；REVIEW 中遥测达标同样转 COMPLETED（迟到遥测可终结核查）。
      * 终态/未下发的迟到遥测一律忽略。
      */
     public void onTelemetry(String instructionId, BigDecimal measuredKw) {
+        onTelemetry(instructionId, measuredKw, LocalDateTime.now());
+    }
+
+    /**
+     * 携带遥测时间戳的遥测驱动：达标判据基于遥测点自带的时间戳，
+     * 模拟场景传模拟时间可保留模拟时间语义（不随 wall-clock 漂移）。
+     */
+    public void onTelemetry(String instructionId, BigDecimal measuredKw, LocalDateTime observedAt) {
         DispatchInstruction instruction = repository.require(instructionId);
         InstructionState state = instruction.getState();
         if (state == InstructionState.CREATED || state.isTerminal()) {
             log.warn("迟到/无效遥测忽略: {} 当前 {}", instructionId, state);
             return;
         }
-        if (instruction.evaluateTelemetry(measuredKw, toleranceKw, stableWindowMs)) {
+        if (instruction.evaluateTelemetry(measuredKw, toleranceKw, stableWindowMs, observedAt)) {
             instruction.completeByTelemetry();
             log.info("遥测连续稳定达标: {} 响应时延 {}ms", instructionId,
                     instruction.responseTimeMs());

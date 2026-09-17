@@ -75,8 +75,11 @@ public class DeviceTokenService {
         // 关 1：取密钥（此处才解密密钥，未注册设备不触发解密运算）
         return store.secretOf(message.deviceId(), message.keyId())
                 // 关 4：MAC 比对 + nonce 原子登记
+                // nonce 有效期以消息时间戳为基准：覆盖该消息最晚可接受时刻
+                //（设备时钟允许超前至 now + windowMs），过期后原消息重放仍被拒
                 .map(secret -> HmacSupport.constantTimeEquals(sign(message, secret), token)
-                        && nonceRegistry.registerOnce(message.deviceId(), message.nonce(), nowMs))
+                        && nonceRegistry.registerOnce(message.deviceId(), message.nonce(),
+                                message.timestamp(), nowMs))
                 .orElse(false);
     }
 }

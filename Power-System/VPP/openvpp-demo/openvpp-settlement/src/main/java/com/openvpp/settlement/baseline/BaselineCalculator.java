@@ -3,6 +3,7 @@ package com.openvpp.settlement.baseline;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 基线核算器 —— 需求响应结算的参照系（"反事实估算"）。
@@ -53,7 +54,7 @@ public class BaselineCalculator {
         // 防线 3：高异常剔除——依据仅来自历史数据自身的中位数
         double median = median(pool);
         double ceiling = median * rule.highOutlierFactor();
-        List<Double> cleaned = pool.stream().filter(v -> v <= ceiling).toList();
+        List<Double> cleaned = pool.stream().filter(v -> v <= ceiling).collect(Collectors.toList());
         if (cleaned.size() < rule.minValidDays()) {
             throw new IllegalStateException("异常剔除后有效样本不足，转人工核查");
         }
@@ -61,7 +62,7 @@ public class BaselineCalculator {
     }
 
     private static double median(List<Double> values) {
-        List<Double> sorted = values.stream().sorted().toList();
+        List<Double> sorted = values.stream().sorted().collect(Collectors.toList());
         int n = sorted.size();
         return n % 2 == 1
                 ? sorted.get(n / 2)

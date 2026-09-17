@@ -19,6 +19,11 @@ import java.time.LocalDateTime;
  */
 public class DispatchInstruction {
 
+    /** 连续达标判定所需的最少连续带内遥测点数：单点只证明瞬时进带 */
+    private static final int MIN_CONSECUTIVE_IN_BAND = 2;
+    /** 相邻遥测点间隔上限：默认采样周期 5s 的 2 倍，超出视为遥测断链，连续计数清零 */
+    private static final long MAX_SAMPLE_GAP_MS = 10_000L;
+
     private final String instructionId;
     private final String resourceId;
     private final BigDecimal commandKw;
@@ -32,6 +37,10 @@ public class DispatchInstruction {
     private LocalDateTime actStartedAt;
     private LocalDateTime reachedAt;
     private LocalDateTime stableAt;
+    /** 连续带内遥测点计数：达标判据的采样语义载体 */
+    private int consecutiveInBand;
+    /** 上一个带内遥测点的时间戳：相邻间隔超上限则连续计数清零 */
+    private LocalDateTime lastInBandAt;
 
     public DispatchInstruction(String instructionId, String resourceId,
                                BigDecimal commandKw, String targetProperty,
@@ -58,25 +67,48 @@ public class DispatchInstruction {
     }
 
     /**
-     * 遥测评估：实际功率是否进入容差带，并在稳定窗口内持续满足。
-     * 离开容差带即重置 reachedAt——稳定必须连续，不允许断断续续凑窗口。
+     * 遥测评估：实际功率是否进入容差带，并以连续采样点证明稳定。
+     *
+     * 达标判据（采样语义，不再依赖两次调用间的 wall-clock 间隔）：
+     *  1. 至少 2 个连续带内遥测点——单点只证明瞬时进带，窗口为 0 时
+     *     同样需要 2 个连续达标点，杜绝"首次进带即完成"；
+     *  2. 相邻带内点间隔不超过缺口上限（默认采样周期 5s 的 2 倍），
+     *     间隔以遥测点携带的时间戳计——模拟场景传模拟时间即保留模拟
+     *     时间语义；超出视为遥测断链，连续计数清零重计；
+     *  3. 稳定窗口（stableWindowMs > 0）另要求带内覆盖时长达到窗口，
+     *     仍按遥测时间戳的首尾跨度计。
+     * 离开容差带即清零——稳定必须连续，不允许断断续续凑点。
      *
      * @param measuredKw     遥测实测功率
      * @param toleranceKw    目标容差（kW）
-     * @param stableWindowMs 连续稳定窗口（毫秒）
+     * @param stableWindowMs 连续稳定窗口（毫秒），0 表示只按连续点数判定
+     * @param observedAt     该遥测点的时间戳
      * @return true 表示连续稳定达标，可转 COMPLETED
      */
     public boolean evaluateTelemetry(BigDecimal measuredKw, BigDecimal toleranceKw,
-                                     long stableWindowMs) {
+                                     long stableWindowMs, LocalDateTime observedAt) {
         boolean inBand = measuredKw.subtract(targetValue).abs().compareTo(toleranceKw) <= 0;
         if (!inBand) {
             this.reachedAt = null;
+            this.lastInBandAt = null;
+            this.consecutiveInBand = 0;
             return false;
         }
-        if (this.reachedAt == null) {
-            this.reachedAt = LocalDateTime.now();
+        if (this.lastInBandAt != null
+                && Duration.between(this.lastInBandAt, observedAt).toMillis() > MAX_SAMPLE_GAP_MS) {
+            // 遥测断链：连续性无法证明，计数清零重计
+            this.consecutiveInBand = 0;
+            this.reachedAt = null;
         }
-        return Duration.between(this.reachedAt, LocalDateTime.now()).toMillis() >= stableWindowMs;
+        if (this.consecutiveInBand == 0) {
+            this.reachedAt = observedAt;
+        }
+        this.consecutiveInBand++;
+        this.lastInBandAt = observedAt;
+        if (this.consecutiveInBand < MIN_CONSECUTIVE_IN_BAND) {
+            return false;
+        }
+        return Duration.between(this.reachedAt, observedAt).toMillis() >= stableWindowMs;
     }
 
     /**

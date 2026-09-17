@@ -113,6 +113,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.11.0</version>
+                    <configuration>
+                        <!-- 工程承诺 Java 11：release 锁定编译目标与 JDK API 面，
+                             高版本 JDK 编译时拒绝 Java 12+ API（如 Stream.toList()） -->
+                        <release>11</release>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

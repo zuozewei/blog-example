@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -228,6 +229,63 @@ class DispatchInstructionTest {
         service.onAck("ins-107");   // 迟到回执
         assertEquals(InstructionState.CANCELLED, instruction.getState(),
                 "取消后迟到消息不得重新激活执行");
+    }
+
+    @Test
+    void 终态后同编号重发被幂等拒绝() throws InterruptedException {
+        DispatchInstruction instruction = newInstruction("ins-110");
+        service.send(instruction);
+        telemetryStable("ins-110");
+        assertEquals(InstructionState.COMPLETED, instruction.getState());
+
+        // 同编号再次下发：终态后不得作为新指令执行（重发须新编号 + 关联原编号）
+        service.send(newInstruction("ins-110"));
+        assertEquals(1, downlinkLog.size(), "终态后同编号重发不得再投递下行通道");
+        assertEquals(InstructionState.COMPLETED, instruction.getState());
+    }
+
+    @Test
+    void 单点达标不完成() {
+        DispatchInstruction instruction = newInstruction("ins-111");
+        service.send(instruction);
+        LocalDateTime t0 = LocalDateTime.now();
+        service.onTelemetry("ins-111", new BigDecimal("-505"), t0);
+        assertEquals(InstructionState.SENT, instruction.getState(),
+                "单个带内遥测点只证明瞬时进带，不得判定连续稳定");
+        assertNotNull(instruction.getReachedAt(), "首个带内点必须记录达标起点（响应时延口径）");
+    }
+
+    @Test
+    void 大间隔两达标点不完成() {
+        DispatchInstruction instruction = newInstruction("ins-112");
+        service.send(instruction);
+        LocalDateTime t0 = LocalDateTime.now();
+        service.onTelemetry("ins-112", new BigDecimal("-505"), t0);
+        // 间隔 15s > 缺口上限（默认采样周期 5s 的 2 倍）：遥测断链，连续性无法证明
+        service.onTelemetry("ins-112", new BigDecimal("-505"), t0.plusSeconds(15));
+        assertEquals(InstructionState.SENT, instruction.getState(),
+                "相邻带内点间隔超上限视为断链，连续计数清零，不得判定完成");
+        // 断链后重新累计：再补一个正常间隔的带内点才构成连续两点
+        service.onTelemetry("ins-112", new BigDecimal("-505"), t0.plusSeconds(20));
+        assertEquals(InstructionState.COMPLETED, instruction.getState());
+    }
+
+    @Test
+    void 连续两点达标完成_窗口为零也需两个点() {
+        // 稳定窗口为 0 的教学配置：仍需 2 个连续带内点（与装配注释"两次连续进带"一致）
+        InstructionService zeroWindowService = new InstructionService(
+                repository, downlinkLog::add, TOLERANCE_KW, 0L);
+        DispatchInstruction instruction = newInstruction("ins-113");
+        zeroWindowService.send(instruction);
+
+        LocalDateTime t0 = LocalDateTime.now();
+        zeroWindowService.onTelemetry("ins-113", new BigDecimal("-505"), t0);
+        assertEquals(InstructionState.SENT, instruction.getState(),
+                "窗口为 0 时首次进带即完成是缺陷：单点不得判定完成");
+
+        zeroWindowService.onTelemetry("ins-113", new BigDecimal("-505"), t0.plusSeconds(5));
+        assertEquals(InstructionState.COMPLETED, instruction.getState(),
+                "2 个连续带内点（间隔在缺口上限内）方可判定连续稳定达标");
     }
 
     @Test
