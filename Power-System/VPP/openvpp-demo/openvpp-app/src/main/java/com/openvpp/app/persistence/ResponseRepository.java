@@ -41,6 +41,14 @@ public class ResponseRepository {
         return n != null && n > 0;
     }
 
+    /** 任务状态（DISPATCHED / SETTLED / GAP），任务不存在返回 null */
+    public String taskState(String responseId) {
+        List<String> states = jdbc.query(
+                "SELECT state FROM dr_task WHERE response_id=?",
+                (rs, rowNum) -> rs.getString(1), responseId);
+        return states.isEmpty() ? null : states.get(0);
+    }
+
     public List<Map<String, Object>> listTasks() {
         return jdbc.queryForList("SELECT * FROM dr_task ORDER BY created_ms DESC");
     }
@@ -90,6 +98,16 @@ public class ResponseRepository {
                 "SELECT COUNT(*) FROM bill WHERE response_id=? AND subject=? AND bill_type=?",
                 Integer.class, responseId, subject, billType);
         return n != null && n > 0;
+    }
+
+    /**
+     * 删除分摊类账单（SHARE / PLATFORM_CUT），保留收入侧（SETTLE）与更正记录（CORRECTION）。
+     * 供分摊"全量替换"式重写使用：中断恢复 / 争议更正重算时先清再写，金额不重复。
+     */
+    public int deleteAllocationBills(String responseId) {
+        return jdbc.update(
+                "DELETE FROM bill WHERE response_id=? AND bill_type IN ('SHARE','PLATFORM_CUT')",
+                responseId);
     }
 
     public List<Map<String, Object>> listBills(String responseId) {

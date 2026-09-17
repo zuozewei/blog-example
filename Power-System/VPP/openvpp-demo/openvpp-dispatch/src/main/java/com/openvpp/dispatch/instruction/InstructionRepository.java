@@ -26,4 +26,12 @@ public interface InstructionRepository {
     List<DispatchInstruction> findAllInFlight();
 
     List<DispatchInstruction> findByResource(String resourceId);
+
+    /**
+     * 清空全部指令（演示重置用）。
+     * 生产形态无此入口——指令是全生命周期权威记录，只能走状态机终态，不得物理清除。
+     */
+    default void clear() {
+        throw new UnsupportedOperationException("该实现不支持清空指令仓库");
+    }
 }

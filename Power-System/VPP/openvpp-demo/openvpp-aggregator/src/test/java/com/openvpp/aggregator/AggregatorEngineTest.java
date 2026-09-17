@@ -188,21 +188,21 @@ class AggregatorEngineTest {
 
         InstructionDecomposer.DecompositionResult first =
                 decomposer.decompose(members, committable, new BigDecimal("800"),
-                        AssessedResource.Direction.DOWN, window, ledger);
+                        AssessedResource.Direction.DOWN, window, "task-1", ledger);
         assertTrue(first.isFeasible(), "首任务 800 kW 必须可行");
 
         // 断言③：同一资源同一重叠窗口再下发 200 kW，
         // 有效能力 1000 - 已预占 800 = 剩余 200，恰可行且二次分配 ≤ 剩余能力
         InstructionDecomposer.DecompositionResult second =
                 decomposer.decompose(members, committable, new BigDecimal("200"),
-                        AssessedResource.Direction.DOWN, window, ledger);
+                        AssessedResource.Direction.DOWN, window, "task-2", ledger);
         assertTrue(second.isFeasible());
         assertEquals(0, second.getPlan().get("es-001").compareTo(new BigDecimal("200")));
 
         // 第三次 1 kW：剩余能力为 0，断言②+④ —— 不得占用已预占容量，返回缺口
         InstructionDecomposer.DecompositionResult third =
                 decomposer.decompose(members, committable, BigDecimal.ONE,
-                        AssessedResource.Direction.DOWN, window, ledger);
+                        AssessedResource.Direction.DOWN, window, "task-3", ledger);
         assertFalse(third.isFeasible(), "重叠窗口内剩余能力为 0 时必须返回缺口");
         assertEquals(0, third.getGapKw().compareTo(BigDecimal.ONE));
 
@@ -247,6 +247,6 @@ class AggregatorEngineTest {
             List<AssessedResource> members, BigDecimal committable, BigDecimal command,
             TaskWindow window, CapacityReservationLedger ledger) {
         return decomposer.decompose(members, committable, command,
-                AssessedResource.Direction.DOWN, window, ledger);
+                AssessedResource.Direction.DOWN, window, "task-decomposeWith", ledger);
     }
 }

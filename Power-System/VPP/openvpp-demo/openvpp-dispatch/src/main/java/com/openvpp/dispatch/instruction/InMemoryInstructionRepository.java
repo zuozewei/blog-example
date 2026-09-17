@@ -42,4 +42,10 @@ public class InMemoryInstructionRepository implements InstructionRepository {
                 .filter(i -> i.getResourceId().equals(resourceId))
                 .collect(Collectors.toList());
     }
+
+    /** 清空全部指令（演示重置用；生产数据库形态不得实现） */
+    @Override
+    public void clear() {
+        instructions.clear();
+    }
 }

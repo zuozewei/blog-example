@@ -65,7 +65,7 @@
 |---|---|---|
 | NORMAL | 3 资源在线 | 可行，响应量 600 kWh，结算 1200 元 |
 | DEGRADED | ev-001 掉线 | 可承诺 =(475+360)×0.9=751.5 kW < 900 → **不可行，返回缺口 148.5 kW**，不出账 |
-| DISPUTED | 计量补到 | 同 NORMAL 完成结算，更正走冲正记录（保留旧版） |
+| DISPUTED | 计量补到（第 2 时段实测 400→380 kW） | 同 NORMAL 完成结算，更正响应量 615 kWh 仍按申报 600 封顶、金额不变；生成版本化更正账单（CORRECTION，V2），原始账单（V1）保留 |
 
 ## 六、验证方法
 
@@ -80,6 +80,8 @@ curl -X POST "http://localhost:8080/api/v1/demo/run?responseId=run-001&path=NORM
 curl -X POST "http://localhost:8080/api/v1/demo/run?responseId=run-001&path=NORMAL"
 # 降级路径
 curl -X POST "http://localhost:8080/api/v1/demo/run?responseId=run-002&path=DEGRADED"
+# 争议路径（结算完成后生成 V2 更正账单，原始账单保留）
+curl -X POST "http://localhost:8080/api/v1/demo/run?responseId=run-003&path=DISPUTED"
 # 查询
 curl "http://localhost:8080/api/v1/tasks"
 curl "http://localhost:8080/api/v1/instructions?responseId=run-001"

@@ -39,12 +39,13 @@ public class InstructionDecomposer {
             this.gapKw = gapKw;
         }
 
-        static DecompositionResult feasible(Map<String, BigDecimal> plan) {
-            return new DecompositionResult(plan, BigDecimal.ZERO);
-        }
-
         static DecompositionResult infeasible(BigDecimal gapKw) {
             return new DecompositionResult(Map.of(), gapKw);
+        }
+
+        /** 构造可行结果（恢复路径沿用既有预占时调用方需要） */
+        public static DecompositionResult feasible(Map<String, BigDecimal> plan) {
+            return new DecompositionResult(plan, BigDecimal.ZERO);
         }
 
         /** 任务可完整承接：分配方案可用且总和守恒等于指令量 */
@@ -71,6 +72,7 @@ public class InstructionDecomposer {
      * @param commandKw         单元级调度指令（下调为正）
      * @param direction         任务调节方向（与成员方向不匹配的不参与分配）
      * @param window            任务时间窗（预占冲突判定粒度）
+     * @param taskId            响应任务标识（预占按此登记，任务结束按此释放）
      * @param ledger            容量预占台账（重叠窗口累计占用从有效能力中扣除）
      * @return 分解结果；不可行时返回缺口量
      */
@@ -79,6 +81,7 @@ public class InstructionDecomposer {
                                          BigDecimal commandKw,
                                          AssessedResource.Direction direction,
                                          TaskWindow window,
+                                         String taskId,
                                          CapacityReservationLedger ledger) {
         if (members == null || members.isEmpty()) {
             throw new IllegalArgumentException("成员列表为空，无法分解");
@@ -143,10 +146,11 @@ public class InstructionDecomposer {
             }
         }
 
-        // 防线 4（容量预占）：登记本次占用，重叠时间窗的后续任务将看到剩余能力
+        // 防线 4（容量预占）：按任务标识登记本次占用，
+        // 重叠时间窗的后续任务将看到剩余能力；任务结束由编排器按 taskId 释放
         plan.forEach((resourceId, share) -> {
             if (share.signum() > 0) {
-                ledger.reserve(resourceId, window, share);
+                ledger.reserve(taskId, resourceId, window, share);
             }
         });
         return DecompositionResult.feasible(plan);
@@ -160,6 +164,6 @@ public class InstructionDecomposer {
                                          BigDecimal commandKw) {
         return decompose(members, committablePoolKw, commandKw,
                 AssessedResource.Direction.DOWN, new TaskWindow(0L, 3600L),
-                new CapacityReservationLedger());
+                "teaching-standalone", new CapacityReservationLedger());
     }
 }

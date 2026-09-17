@@ -43,11 +43,16 @@ public class ParkResponseController {
         return orchestrator.run(responseId, path, declaredKwh, targetKw);
     }
 
-    /** 清理演示数据（重置后可用同一 responseId 再次运行） */
+    /**
+     * 清理演示数据（重置后可用同一 responseId 再次运行）。
+     * 库表与内存运行态（容量预占台账、内存指令仓库）必须一起清——
+     * 只清库不清内存会残留旧预占，挤占剩余能力，再运行正常案例误报缺口。
+     */
     @PostMapping("/demo/reset")
     public Map<String, Object> reset() {
         int t = repo.deleteAll();
-        return Map.of("cleared", t, "note", "演示数据已清理，可再次运行");
+        orchestrator.resetRuntimeState();
+        return Map.of("cleared", t, "note", "演示数据与运行状态已清理，可再次运行");
     }
 
     @GetMapping("/tasks")
