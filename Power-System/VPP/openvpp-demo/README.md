@@ -18,7 +18,7 @@
 | `openvpp-settlement` | 基线核算、结算分摊 | 第 17、21 篇 |
 | `openvpp-market` | 申报、竞价（简化演示） | 第 19、20 篇 |
 | `openvpp-edge` | 边缘侧缓存补传 demo | 第 09 篇 |
-| `openvpp-app` | 单体启动入口（演示用） | 第 05、25 篇 |
+| `openvpp-app` | 单体启动入口 + 业务闭环编排（贯穿案例） | 第 05、19、25 篇 |
 
 ## 快速开始
 
@@ -32,6 +32,36 @@ curl http://127.0.0.1:8080/api/v1/system/ping
 ```
 
 > `settings-openvpp.xml`：全局 Maven 配置了不可达私服镜像时的逃生通道（显式走公共镜像，不动全局配置）。
+
+## 园区需求响应贯穿案例（第 19 篇，已接入主工程）
+
+`openvpp-app` 把各业务模块串成完整闭环（H2 文件库持久化，读者零外部依赖）：
+
+```
+模拟遥测 → 接入校验 → 数据入库 → 能力评估 → 资源聚合 → 响应任务
+        → 指令下发 → 执行核验 → 响应量计算 → 结算分摊 → 账单查询
+```
+
+```bash
+mvn -s settings-openvpp.xml -pl openvpp-app -am -DskipTests package
+java -jar openvpp-app/target/openvpp-app-1.0.0.jar
+
+# 三条路径（教学假设数值见 openvpp-app/PARK-DEMO.md 手工核算底稿）
+curl -X POST "http://localhost:8080/api/v1/demo/run?responseId=run-001&path=NORMAL"    # 正常：600kWh/1200元
+curl -X POST "http://localhost:8080/api/v1/demo/run?responseId=run-002&path=DEGRADED"  # 降级：缺口 148.5kW
+curl -X POST "http://localhost:8080/api/v1/demo/run?responseId=run-001&path=NORMAL"    # 幂等重放：idempotentReplay=true
+
+# 查询入口（任务/指令/基线/账单，responseId 贯穿关联）
+curl "http://localhost:8080/api/v1/tasks"
+curl "http://localhost:8080/api/v1/instructions?responseId=run-001"
+curl "http://localhost:8080/api/v1/baselines?responseId=run-001"
+curl "http://localhost:8080/api/v1/bills?responseId=run-001"
+
+# 重置（清理演示数据后可再跑）
+curl -X POST "http://localhost:8080/api/v1/demo/reset"
+```
+
+幂等保证：同一 `responseId` 重复触发不重复下发、不重复出账；重启后任务与账单仍在（H2 文件库 `~/.openvpp/openvpp-db`）。
 
 ## 网关回环测试（第 06 篇）
 
