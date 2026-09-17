@@ -1,0 +1,38 @@
+version: "3.8"
+
+# 专栏第 25 篇：openvpp-demo 一键交付编排
+# 一条命令拉起完整演示环境：应用 + MySQL + Redis + EMQX（MQTT broker）
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      OPENVPP_MQTT_BROKER: tcp://emqx:1883
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - emqx
+      - mysql
+      - redis
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: openvpp-demo
+      MYSQL_DATABASE: openvpp_demo
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  emqx:
+    image: emqx:5
+    ports:
+      - "1883:1883"     # MQTT
+      - "18083:18083"   # 控制台
+    environment:
+      EMQX_DASHBOARD__DEFAULT_USERNAME: admin
+      EMQX_DASHBOARD__DEFAULT_PASSWORD: openvpp

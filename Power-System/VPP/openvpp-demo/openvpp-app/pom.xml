@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.openvpp</groupId>
+        <artifactId>openvpp-demo</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>openvpp-app</artifactId>
+    <name>openvpp-app</name>
+    <description>启动模块：单体可跑，专栏演示用聚合启动；生产形态按业务域拆分部署</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.openvpp</groupId>
+            <artifactId>openvpp-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.openvpp</groupId>
+            <artifactId>openvpp-resource</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.openvpp</groupId>
+            <artifactId>openvpp-assessment</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.openvpp</groupId>
+            <artifactId>openvpp-aggregator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.openvpp</groupId>
+            <artifactId>openvpp-gateway</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

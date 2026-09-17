@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: openvpp-demo
+
+# 专栏示例工程统一约定：接口路径前缀，禁止出现真实项目路径风格
+openvpp:
+  api-prefix: /api/v1
