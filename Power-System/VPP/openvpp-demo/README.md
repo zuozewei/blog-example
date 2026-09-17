@@ -73,13 +73,11 @@ mvn -s settings-openvpp.xml -pl openvpp-gateway -am test
 
 ## 章节 tag 对照
 
-| tag | 里程碑 |
-|-----|--------|
-| `part1-cognition` | 认知与需求篇完成：common + 领域模型骨架 |
-| `part2-iot` | 物联接入篇完成（规划中） |
-| `part3-core` | 聚合调度核心篇完成（规划中） |
-| `part4-market` | 市场与安全篇完成（规划中） |
-| `part5-delivery` | 交付与 AI 篇完成（规划中） |
+| tag | 指向 | 说明 |
+|-----|------|------|
+| `part1-cognition` | 完整主干（当前里程碑） | 专栏各篇文末统一引用的工程快照 tag。历史命名沿用首篇（认知与需求篇），现指向**完整工程**：11 模块 + `openvpp-app` 业务闭环 + 算法番外接入，全仓 132 项测试（执行 131 全绿，1 项 live benchmark 跳过）。获取：`git checkout part1-cognition` |
+
+> 说明：专栏 22 篇文章统一引用 `part1-cognition` 作为工程获取入口。为避免 22 处引用失效，该 tag 固定指向完整主干快照；后续若需按篇章切分历史快照，将新增 `part2-iot`、`part3-core` 等 tag 并在此同步。
 
 ## 脱敏红线
 
