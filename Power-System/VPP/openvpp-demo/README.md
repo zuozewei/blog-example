@@ -42,6 +42,13 @@ curl http://127.0.0.1:8080/api/v1/system/ping
         → 指令下发 → 执行核验 → 响应量计算 → 结算分摊 → 账单查询
 ```
 
+**数据与接入口径（请务必先读）**：
+
+- 园区案例为**模拟数据驱动的业务编排**：遥测/计量/资源容量均为编排层内置模拟源（`buildSamples`/`buildMembers` 直接构造），**不来自网关真实协议接入**；链路其余环节（评估/聚合/指令/结算）走真实业务代码。
+- 网关默认**本地模拟模式**（`openvpp.gateway.mode=local`）：`java -jar` 启动不连接任何外部消息服务，断网可跑；真实 MQTT/CoAP 协议接入须显式设置 `openvpp.gateway.mode=remote` 并配置 `openvpp.mqtt.broker`（工程不提供任何默认外部地址）。
+- 三路径现状：`NORMAL`（正常）、`DEGRADED`（降级报缺口）、`DISPUTED`（争议计量补正）均已实现；争议路径模拟结算完成后计量补到，按版本化重算模型生成 `CORRECTION` 更正账单（账期版本 V2），原始账单（V1）与基线点保留不改（口径与示例数值见 `openvpp-app/PARK-DEMO.md`）。
+- 算法番外（第 33-35 篇）已**纳入代码工程并配模块级单测**（`openvpp-dispatch` 的 MPC 调度、`openvpp-settlement` 的区域结算等）；但主应用编排当前只调用**评估 → 聚合 → 指令 → 结算**主线，MPC 与区域结算模块**尚未接入编排链路**。
+
 ```bash
 mvn -s settings-openvpp.xml -pl openvpp-app -am -DskipTests package
 java -jar openvpp-app/target/openvpp-app-1.0.0.jar
@@ -71,11 +78,14 @@ mvn -s settings-openvpp.xml -pl openvpp-gateway -am test
 # CoapIngestServerTest：本机 127.0.0.1 随机端口回环
 ```
 
+> 说明：回环测试是**测试专用**通路，与主应用默认本地模拟模式无关；
+> 其中 MQTT 用例需可访问公共 broker（断网环境跳过即可），不影响 `java -jar` 零依赖启动。
+
 ## 章节 tag 对照
 
 | tag | 指向 | 说明 |
 |-----|------|------|
-| `part1-cognition` | 完整主干（当前里程碑） | 专栏各篇文末统一引用的工程快照 tag。历史命名沿用首篇（认知与需求篇），现指向**完整工程**：11 模块 + `openvpp-app` 业务闭环 + 算法番外接入，全仓 132 项测试（执行 131 全绿，1 项 live benchmark 跳过）。获取：`git checkout part1-cognition` |
+| `part1-cognition` | 完整主干（当前里程碑） | 专栏各篇文末统一引用的工程快照 tag。历史命名沿用首篇（认知与需求篇），现指向**完整工程**：11 模块 + `openvpp-app` 业务闭环 + 算法番外模块代码。测试数量**以最新 surefire 报告为准**（查看：`mvn -s settings-openvpp.xml test` 后汇总各模块 `*/target/surefire-reports/*.txt` 的 Tests run 数；其中 live 用例如 MQTT 公网回环、TSDB benchmark 依赖外部环境，断网时跳过不计入口径）。获取：`git checkout part1-cognition` |
 
 > 说明：专栏 22 篇文章统一引用 `part1-cognition` 作为工程获取入口。为避免 22 处引用失效，该 tag 固定指向完整主干快照；后续若需按篇章切分历史快照，将新增 `part2-iot`、`part3-core` 等 tag 并在此同步。
 

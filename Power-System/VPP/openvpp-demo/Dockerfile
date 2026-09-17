@@ -1,4 +1,5 @@
-# 依赖
+# 构建依赖（构建与运行均为 JDK 11，与工程 Java 11 承诺一致；
+# 运行时默认本地模拟模式，单容器零外部依赖，真实接入由 docker-compose 显式开启 remote）
 FROM maven:3.9-eclipse-temurin-11 AS build
 WORKDIR /build
 COPY pom.xml settings-openvpp.xml ./
